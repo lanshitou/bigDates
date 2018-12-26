@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.PlantCompactMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.PlantCompact">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+        <result column="crop_name" jdbcType="VARCHAR" property="cropName"/>
+        <result column="crop_area" jdbcType="DOUBLE" property="cropArea"/>
+        <result column="principal" jdbcType="VARCHAR" property="principal"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime"/>
+        <result column="years" jdbcType="INTEGER" property="years"/>
+        <result column="plan_output" jdbcType="INTEGER" property="planOutput"/>
+        <result column="scene" jdbcType="TINYINT" property="scene"/>
+        <result column="grow_time" jdbcType="TIMESTAMP" property="growTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="CropResultMap" type="com.tomsung.agdc.domain.Crop">
+        <result column="crop_id" property="cropId"/>
+        <result column="crop_name" property="cropName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, block_id, user_id, crop_id, crop_name, crop_area, principal, phone, begin_time,
+    years, plan_output, scene, grow_time, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PLANT_COMPACT
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectCropByUserId" resultMap="CropResultMap">
+        select crop_id, crop_name
+        from PLANT_COMPACT
+        where user_id = #{userId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PLANT_COMPACT
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.PlantCompact">
+    insert into PLANT_COMPACT (id, block_id, user_id,
+      crop_id, crop_name, crop_area,
+      principal, phone, begin_time,
+      years, plan_output, scene,
+      grow_time, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{blockId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+      #{cropId,jdbcType=INTEGER}, #{cropName,jdbcType=VARCHAR}, #{cropArea,jdbcType=DOUBLE},
+      #{principal,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP},
+      #{years,jdbcType=INTEGER}, #{planOutput,jdbcType=INTEGER}, #{scene,jdbcType=TINYINT},
+      #{growTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.PlantCompact">
+        insert into PLANT_COMPACT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="blockId != null">
+                block_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="cropId != null">
+                crop_id,
+            </if>
+            <if test="cropName != null">
+                crop_name,
+            </if>
+            <if test="cropArea != null">
+                crop_area,
+            </if>
+            <if test="principal != null">
+                principal,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="beginTime != null">
+                begin_time,
+            </if>
+            <if test="years != null">
+                years,
+            </if>
+            <if test="planOutput != null">
+                plan_output,
+            </if>
+            <if test="scene != null">
+                scene,
+            </if>
+            <if test="growTime != null">
+                grow_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="blockId != null">
+                #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="cropId != null">
+                #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="cropName != null">
+                #{cropName,jdbcType=VARCHAR},
+            </if>
+            <if test="cropArea != null">
+                #{cropArea,jdbcType=DOUBLE},
+            </if>
+            <if test="principal != null">
+                #{principal,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null">
+                #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="years != null">
+                #{years,jdbcType=INTEGER},
+            </if>
+            <if test="planOutput != null">
+                #{planOutput,jdbcType=INTEGER},
+            </if>
+            <if test="scene != null">
+                #{scene,jdbcType=TINYINT},
+            </if>
+            <if test="growTime != null">
+                #{growTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.PlantCompact">
+        update PLANT_COMPACT
+        <set>
+            <if test="blockId != null">
+                block_id = #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="cropId != null">
+                crop_id = #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="cropName != null">
+                crop_name = #{cropName,jdbcType=VARCHAR},
+            </if>
+            <if test="cropArea != null">
+                crop_area = #{cropArea,jdbcType=DOUBLE},
+            </if>
+            <if test="principal != null">
+                principal = #{principal,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null">
+                begin_time = #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="years != null">
+                years = #{years,jdbcType=INTEGER},
+            </if>
+            <if test="planOutput != null">
+                plan_output = #{planOutput,jdbcType=INTEGER},
+            </if>
+            <if test="scene != null">
+                scene = #{scene,jdbcType=TINYINT},
+            </if>
+            <if test="growTime != null">
+                grow_time = #{growTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.PlantCompact">
+    update PLANT_COMPACT
+    set block_id = #{blockId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      crop_id = #{cropId,jdbcType=INTEGER},
+      crop_name = #{cropName,jdbcType=VARCHAR},
+      crop_area = #{cropArea,jdbcType=DOUBLE},
+      principal = #{principal,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      years = #{years,jdbcType=INTEGER},
+      plan_output = #{planOutput,jdbcType=INTEGER},
+      scene = #{scene,jdbcType=TINYINT},
+      grow_time = #{growTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectCropCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (SELECT COUNT(*) FROM PLANT_COMPACT pc
+        <if test="date != null">
+            WHERE pc.create_time> #{date}
+        </if>
+        GROUP BY pc.crop_name) a
+    </select>
+    <resultMap id="BlockOutputRankMap" type="com.tomsung.agdc.vo.BlockOutputRankVo">
+        <result column="sum" jdbcType="INTEGER" property="sum"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <select id="selectBlockOutputRank" resultMap="BlockOutputRankMap">
+        SELECT SUM(pc.plan_output) sum, u.REALUSERNAME name
+        FROM PLANT_COMPACT pc
+                 LEFT JOIN USER u ON pc.user_id = u.USERID
+        WHERE DATE_FORMAT(pc.grow_time, '%Y') = DATE_FORMAT(#{annual}, '%Y')
+          AND pc.crop_id = #{cropId}
+        GROUP BY pc.user_id
+        ORDER BY sum DESC
+        LIMIT 0, 7
+    </select>
+</mapper>

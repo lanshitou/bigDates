@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.AirHumidityMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.AirHumidity">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="DEVICE_ID" jdbcType="INTEGER" property="deviceId"/>
+        <result column="VALUE" jdbcType="INTEGER" property="value"/>
+        <result column="TIME" jdbcType="TIMESTAMP" property="time"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, DEVICE_ID, VALUE, TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from AIR_HUMIDITY
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from AIR_HUMIDITY
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.AirHumidity">
+        insert into AIR_HUMIDITY (ID, DEVICE_ID, VALUE, TIME)
+        values (#{id,jdbcType=INTEGER},
+                #{deviceId,jdbcType=INTEGER},
+                #{value,jdbcType=INTEGER},
+                #{time,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.AirHumidity">
+        insert into AIR_HUMIDITY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="deviceId != null">
+                DEVICE_ID,
+            </if>
+            <if test="value != null">
+                VALUE,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.AirHumidity">
+        update AIR_HUMIDITY
+        <set>
+            <if test="deviceId != null">
+                DEVICE_ID = #{deviceId,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                VALUE = #{value,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                TIME = #{time,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.AirHumidity">
+        update AIR_HUMIDITY
+        set DEVICE_ID = #{deviceId,jdbcType=INTEGER},
+            VALUE     = #{value,jdbcType=INTEGER},
+            TIME      = #{time,jdbcType=TIMESTAMP}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <resultMap id="MeteorologcalDataMap" type="com.tomsung.agdc.vo.MeteorologicalDataVo">
+        <result column="VALUE" jdbcType="INTEGER" property="value"/>
+        <result column="TIME" jdbcType="TIMESTAMP" property="time"/>
+    </resultMap>
+    <select id="selectAirHumidityData" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT ah.VALUE, DATE_FORMAT(ah.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM AIR_HUMIDITY ah
+        where ah.BLOCK_ID = #{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+
+    </select>
+    <select id="selectAirTemperatureData" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT at.VALUE, DATE_FORMAT(at.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM AIR_TEMPERATURE at
+        where at.BLOCK_ID = #{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+    </select>
+    <select id="selectSoilTemperatureData" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT st.VALUE, DATE_FORMAT(st.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM SOIL_TEMPERATURE st
+        where st.BLOCK_ID = #{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+    </select>
+    <select id="selectSoilMostureData" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT sm.VALUE, DATE_FORMAT(sm.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM SOIL_HUMIDITY sm
+        where sm.BLOCK_ID = #{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+    </select>
+    <select id="selectLightData" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT l.VALUE, DATE_FORMAT(l.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM LIGHT l
+        where l.BLOCK_ID = #{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+    </select>
+    <select id="selectCo2Data" resultMap="MeteorologcalDataMap">
+        select * from (
+        SELECT c.CO2DATA VALUE, DATE_FORMAT(c.TIME, '%Y-%m-%d %H:00:00') TIME
+        FROM CO2 c
+        WHERE c.FARMLANDID =#{blockId}
+        ORDER BY TIME DESC
+        <if test="time == 00">LIMIT 0,24</if>
+        <if test="time == 01">LIMIT 0,72</if>
+        <if test="time == 02">LIMIT 0,168</if>) res
+        order by res.time
+    </select>
+    <select id="selectAirHumidityDataByMaxDate" resultType="java.lang.Integer">
+        SELECT ah.VALUE
+        FROM AIR_HUMIDITY ah
+        WHERE ah.TIME =
+              (SELECT MAX(ah.TIME) FROM AIR_HUMIDITY  where ah.BLOCK_ID = #{blockId})
+          and ah.BLOCK_ID = #{blockId}
+    </select>
+    <select id="selectAirTemperatureDataByMaxDate" resultType="java.lang.Integer">
+        SELECT at.VALUE
+        FROM AIR_TEMPERATURE at
+        WHERE at.TIME =
+              (SELECT MAX(at.TIME) FROM  AIR_TEMPERATURE at where at.BLOCK_ID = #{blockId})
+          and at.BLOCK_ID = #{blockId}
+    </select>
+    <select id="selectSoilTemperatureDataByMaxDate" resultType="java.lang.Integer">
+        SELECT st.VALUE
+        FROM SOIL_TEMPERATURE st
+        WHERE st.TIME =
+              (SELECT MAX(st.TIME) FROM SOIL_TEMPERATURE st where st.BLOCK_ID = #{blockId})
+          and st.BLOCK_ID = #{blockId}
+    </select>
+    <select id="selectSoilMostureDataByMaxDate" resultType="java.lang.Integer">
+        SELECT sh.VALUE
+        FROM SOIL_HUMIDITY sh
+        WHERE sh.TIME =
+              (SELECT MAX(sh.TIME) FROM SOIL_HUMIDITY sh where sh.BLOCK_ID = #{blockId})
+        and sh.BLOCK_ID = #{blockId}
+</select>
+    <select id="selectLightDataByMaxDate" resultType="java.lang.Integer">
+        SELECT l.VALUE
+        FROM LIGHT l
+        WHERE l.TIME =
+              (SELECT MAX(l.TIME) FROM LIGHT l where l.BLOCK_ID = #{blockId} )
+        and l.BLOCK_ID = #{blockId}
+    </select>
+    <select id="selectCo2DataByMaxDate" resultType="java.lang.Integer">
+        SELECT c.CO2DATA VALUE
+        FROM CO2 c
+        WHERE c.TIME =
+              (SELECT MAX(c.TIME) FROM CO2 c  WHERE c.FARMLANDID = #{blockId})
+        and c.FARMLANDID = #{blockId}
+    </select>
+</mapper>

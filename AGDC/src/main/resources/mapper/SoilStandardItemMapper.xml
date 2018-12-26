@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.SoilStandardItemMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.SoilStandardItem">
+        <id column="SOIL_STANDARD_ID" jdbcType="INTEGER" property="soilStandardId"/>
+        <id column="ITEM_ID" jdbcType="INTEGER" property="itemId"/>
+        <result column="VALUE" jdbcType="DECIMAL" property="value"/>
+        <result column="HIGH_VALUE" jdbcType="DECIMAL" property="highValue"/>
+        <result column="MIDDLE_VALUE" jdbcType="DECIMAL" property="middleValue"/>
+        <result column="LOW_VALUE" jdbcType="DECIMAL" property="lowValue"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="ListResultMap" type="com.tomsung.agdc.domain.SoilStandardItem" extends="BaseResultMap">
+        <result column="item_name" property="itemName"/>
+        <result column="item_unit" property="itemUnit"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SOIL_STANDARD_ID, ITEM_ID, VALUE, HIGH_VALUE, MIDDLE_VALUE, LOW_VALUE, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.tomsung.agdc.domain.SoilStandardItemKey"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SOIL_STANDARD_ITEM
+        where SOIL_STANDARD_ID = #{soilStandardId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByStandardId" resultMap="ListResultMap">
+        select sst.SOIL_STANDARD_ID, sst.ITEM_ID, sst.VALUE, sst.HIGH_VALUE, sst.MIDDLE_VALUE, sst.LOW_VALUE,
+          si.NAME item_name, si.UNIT item_unit
+        from SOIL_STANDARD_ITEM sst
+        left join SOIL_ITEM si on si.ID = sst.ITEM_ID
+        where sst.SOIL_STANDARD_ID = #{standardId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.tomsung.agdc.domain.SoilStandardItemKey">
+    delete from SOIL_STANDARD_ITEM
+    where SOIL_STANDARD_ID = #{soilStandardId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.SoilStandardItem">
+    insert into SOIL_STANDARD_ITEM (SOIL_STANDARD_ID, ITEM_ID, VALUE, 
+      HIGH_VALUE, MIDDLE_VALUE, LOW_VALUE, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{soilStandardId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{value,jdbcType=DECIMAL}, 
+      #{highValue,jdbcType=DECIMAL}, #{middleValue,jdbcType=DECIMAL}, #{lowValue,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.SoilStandardItem">
+        insert into SOIL_STANDARD_ITEM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="soilStandardId != null">
+                SOIL_STANDARD_ID,
+            </if>
+            <if test="itemId != null">
+                ITEM_ID,
+            </if>
+            <if test="value != null">
+                VALUE,
+            </if>
+            <if test="highValue != null">
+                HIGH_VALUE,
+            </if>
+            <if test="middleValue != null">
+                MIDDLE_VALUE,
+            </if>
+            <if test="lowValue != null">
+                LOW_VALUE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="soilStandardId != null">
+                #{soilStandardId,jdbcType=INTEGER},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=DECIMAL},
+            </if>
+            <if test="highValue != null">
+                #{highValue,jdbcType=DECIMAL},
+            </if>
+            <if test="middleValue != null">
+                #{middleValue,jdbcType=DECIMAL},
+            </if>
+            <if test="lowValue != null">
+                #{lowValue,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.SoilStandardItem">
+        update SOIL_STANDARD_ITEM
+        <set>
+            <if test="value != null">
+                VALUE = #{value,jdbcType=DECIMAL},
+            </if>
+            <if test="highValue != null">
+                HIGH_VALUE = #{highValue,jdbcType=DECIMAL},
+            </if>
+            <if test="middleValue != null">
+                MIDDLE_VALUE = #{middleValue,jdbcType=DECIMAL},
+            </if>
+            <if test="lowValue != null">
+                LOW_VALUE = #{lowValue,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where SOIL_STANDARD_ID = #{soilStandardId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.SoilStandardItem">
+    update SOIL_STANDARD_ITEM
+    set VALUE = #{value,jdbcType=DECIMAL},
+      HIGH_VALUE = #{highValue,jdbcType=DECIMAL},
+      MIDDLE_VALUE = #{middleValue,jdbcType=DECIMAL},
+      LOW_VALUE = #{lowValue,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where SOIL_STANDARD_ID = #{soilStandardId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>

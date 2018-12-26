@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.BlockFertilizationItemMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.BlockFertilizationItem">
+        <id column="BLOCK_SOIL_ID" jdbcType="INTEGER" property="blockSoilId"/>
+        <id column="STANDARD_ID" jdbcType="INTEGER" property="standardId"/>
+        <id column="ITEM_ID" jdbcType="INTEGER" property="itemId"/>
+        <result column="QUANTITY" jdbcType="DECIMAL" property="quantity"/>
+        <result column="UNIT" jdbcType="TINYINT" property="unit"/>
+        <result column="DESCRIBE" jdbcType="VARCHAR" property="describe"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="ListResultMap" type="com.tomsung.agdc.domain.BlockFertilizationItem" extends="BaseResultMap">
+        <result column="item_name" property="itemName"/>
+        <result column="ABBREVIATION" property="abbreviation"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    BLOCK_SOIL_ID, STANDARD_ID, ITEM_ID, QUANTITY, UNIT, DESCRIBE, CREATE_TIME, UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockFertilizationItemKey"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BLOCK_FERTILIZATION_ITEM
+        where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+        and STANDARD_ID = #{standardId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBlockSoilAndStandard" resultMap="ListResultMap">
+        select bfi.BLOCK_SOIL_ID, bfi.STANDARD_ID, bfi.ITEM_ID, bfi.QUANTITY, bfi.UNIT, bfi.DESCRIBE, si.NAME item_name, si.ABBREVIATION
+        from BLOCK_FERTILIZATION_ITEM bfi
+        left join SOIL_ITEM si on si.ID = bfi.ITEM_ID
+        where BLOCK_SOIL_ID = #{blockSoilId} and STANDARD_ID = #{standardId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockFertilizationItemKey">
+    delete from BLOCK_FERTILIZATION_ITEM
+    where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+      and STANDARD_ID = #{standardId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.BlockFertilizationItem">
+    insert into BLOCK_FERTILIZATION_ITEM (BLOCK_SOIL_ID, STANDARD_ID, ITEM_ID, 
+      QUANTITY, UNIT, DESCRIBE, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{blockSoilId,jdbcType=INTEGER}, #{standardId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+      #{quantity,jdbcType=DECIMAL}, #{unit,jdbcType=TINYINT}, #{describe,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.BlockFertilizationItem">
+        insert into BLOCK_FERTILIZATION_ITEM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blockSoilId != null">
+                BLOCK_SOIL_ID,
+            </if>
+            <if test="standardId != null">
+                STANDARD_ID,
+            </if>
+            <if test="itemId != null">
+                ITEM_ID,
+            </if>
+            <if test="quantity != null">
+                QUANTITY,
+            </if>
+            <if test="unit != null">
+                UNIT,
+            </if>
+            <if test="describe != null">
+                DESCRIBE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blockSoilId != null">
+                #{blockSoilId,jdbcType=INTEGER},
+            </if>
+            <if test="standardId != null">
+                #{standardId,jdbcType=INTEGER},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=INTEGER},
+            </if>
+            <if test="quantity != null">
+                #{quantity,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=TINYINT},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch">
+        insert into BLOCK_FERTILIZATION_ITEM (BLOCK_SOIL_ID,STANDARD_ID,ITEM_ID,QUANTITY,UNIT)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.blockSoilId},#{item.standardId},#{item.itemId},#{item.quantity},#{item.unit})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.BlockFertilizationItem">
+        update BLOCK_FERTILIZATION_ITEM
+        <set>
+            <if test="quantity != null">
+                QUANTITY = #{quantity,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=TINYINT},
+            </if>
+            <if test="describe != null">
+                DESCRIBE = #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+        and STANDARD_ID = #{standardId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockFertilizationItem">
+    update BLOCK_FERTILIZATION_ITEM
+    set QUANTITY = #{quantity,jdbcType=DECIMAL},
+      UNIT = #{unit,jdbcType=TINYINT},
+      DESCRIBE = #{describe,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+      and STANDARD_ID = #{standardId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.User">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USER_NUM" jdbcType="INTEGER" property="userNum"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="SEX" jdbcType="VARCHAR" property="sex"/>
+        <result column="EDUCATION" jdbcType="VARCHAR" property="education"/>
+        <result column="BIRTHDAY" jdbcType="DATE" property="birthday"/>
+        <result column="USERURL" jdbcType="VARCHAR" property="userurl"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="CREATTIME" jdbcType="TIMESTAMP" property="creattime"/>
+        <result column="USER_TYPE" jdbcType="INTEGER" property="userType"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+        <result column="ADD_X" jdbcType="DECIMAL" property="addX"/>
+        <result column="ADD_Y" jdbcType="DECIMAL" property="addY"/>
+        <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="totalcount" jdbcType="INTEGER" property="totalCount"/>
+        <result column="contractcount" jdbcType="INTEGER" property="contractCount"/>
+        <result column="c" jdbcType="INTEGER" property="countByProvince"/>
+        <result column="conCount" jdbcType="INTEGER" property="conCount"/>
+        <association property="questionReplyRecord" javaType="com.tomsung.agdc.domain.QuestionReplyRecord">
+            <result column="QUESTION_COUNT" jdbcType="INTEGER" property="questionCount"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, USERID, USER_NUM, USERNAME, REALUSERNAME, SEX, EDUCATION, BIRTHDAY, USERURL,
+        TEL, ADDRESS, EMAIL, CREATTIME, USER_TYPE, PROVINCE_NAME, CITY_NAME, DISTRICT_NAME,
+        ADD_X, ADD_Y, AREA_CODE, CREATE_TIME, UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from USER
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from USER
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.User">
+        insert into USER (ID,
+                          USERID,
+                          USER_NUM,
+                          USERNAME,
+                          REALUSERNAME,
+                          SEX,
+                          EDUCATION,
+                          BIRTHDAY,
+                          USERURL,
+                          TEL,
+                          ADDRESS,
+                          EMAIL,
+                          CREATTIME,
+                          USER_TYPE,
+                          PROVINCE_NAME,
+                          CITY_NAME,
+                          DISTRICT_NAME,
+                          ADD_X,
+                          ADD_Y,
+                          AREA_CODE,
+                          CREATE_TIME,
+                          UPDATE_TIME)
+        values (#{id,jdbcType=INTEGER},
+                #{userid,jdbcType=INTEGER},
+                #{userNum,jdbcType=INTEGER},
+                #{username,jdbcType=VARCHAR},
+                #{realusername,jdbcType=VARCHAR},
+                #{sex,jdbcType=VARCHAR},
+                #{education,jdbcType=VARCHAR},
+                #{birthday,jdbcType=DATE},
+                #{userurl,jdbcType=VARCHAR},
+                #{tel,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{creattime,jdbcType=TIMESTAMP},
+                #{userType,jdbcType=INTEGER},
+                #{provinceName,jdbcType=VARCHAR},
+                #{cityName,jdbcType=VARCHAR},
+                #{districtName,jdbcType=VARCHAR},
+                #{addX,jdbcType=DECIMAL},
+                #{addY,jdbcType=DECIMAL},
+                #{areaCode,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.User">
+        insert into USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="userid != null">
+                USERID,
+            </if>
+            <if test="userNum != null">
+                USER_NUM,
+            </if>
+            <if test="username != null">
+                USERNAME,
+            </if>
+            <if test="realusername != null">
+                REALUSERNAME,
+            </if>
+            <if test="sex != null">
+                SEX,
+            </if>
+            <if test="education != null">
+                EDUCATION,
+            </if>
+            <if test="birthday != null">
+                BIRTHDAY,
+            </if>
+            <if test="userurl != null">
+                USERURL,
+            </if>
+            <if test="tel != null">
+                TEL,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="creattime != null">
+                CREATTIME,
+            </if>
+            <if test="userType != null">
+                USER_TYPE,
+            </if>
+            <if test="provinceName != null">
+                PROVINCE_NAME,
+            </if>
+            <if test="cityName != null">
+                CITY_NAME,
+            </if>
+            <if test="districtName != null">
+                DISTRICT_NAME,
+            </if>
+            <if test="addX != null">
+                ADD_X,
+            </if>
+            <if test="addY != null">
+                ADD_Y,
+            </if>
+            <if test="areaCode != null">
+                AREA_CODE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="userNum != null">
+                #{userNum,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="realusername != null">
+                #{realusername,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="userurl != null">
+                #{userurl,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                #{creattime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="provinceName != null">
+                #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtName != null">
+                #{districtName,jdbcType=VARCHAR},
+            </if>
+            <if test="addX != null">
+                #{addX,jdbcType=DECIMAL},
+            </if>
+            <if test="addY != null">
+                #{addY,jdbcType=DECIMAL},
+            </if>
+            <if test="areaCode != null">
+                #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.User">
+        update USER
+        <set>
+            <if test="userid != null">
+                USERID = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="userNum != null">
+                USER_NUM = #{userNum,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="realusername != null">
+                REALUSERNAME = #{realusername,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                EDUCATION = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                BIRTHDAY = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="userurl != null">
+                USERURL = #{userurl,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                TEL = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                CREATTIME = #{creattime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userType != null">
+                USER_TYPE = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="provinceName != null">
+                PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                CITY_NAME = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtName != null">
+                DISTRICT_NAME = #{districtName,jdbcType=VARCHAR},
+            </if>
+            <if test="addX != null">
+                ADD_X = #{addX,jdbcType=DECIMAL},
+            </if>
+            <if test="addY != null">
+                ADD_Y = #{addY,jdbcType=DECIMAL},
+            </if>
+            <if test="areaCode != null">
+                AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.User">
+        update USER
+        set USERID        = #{userid,jdbcType=INTEGER},
+            USER_NUM      = #{userNum,jdbcType=INTEGER},
+            USERNAME      = #{username,jdbcType=VARCHAR},
+            REALUSERNAME  = #{realusername,jdbcType=VARCHAR},
+            SEX           = #{sex,jdbcType=VARCHAR},
+            EDUCATION     = #{education,jdbcType=VARCHAR},
+            BIRTHDAY      = #{birthday,jdbcType=DATE},
+            USERURL       = #{userurl,jdbcType=VARCHAR},
+            TEL           = #{tel,jdbcType=VARCHAR},
+            ADDRESS       = #{address,jdbcType=VARCHAR},
+            EMAIL         = #{email,jdbcType=VARCHAR},
+            CREATTIME     = #{creattime,jdbcType=TIMESTAMP},
+            USER_TYPE     = #{userType,jdbcType=INTEGER},
+            PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+            CITY_NAME     = #{cityName,jdbcType=VARCHAR},
+            DISTRICT_NAME = #{districtName,jdbcType=VARCHAR},
+            ADD_X         = #{addX,jdbcType=DECIMAL},
+            ADD_Y         = #{addY,jdbcType=DECIMAL},
+            AREA_CODE     = #{areaCode,jdbcType=VARCHAR},
+            CREATE_TIME   = #{createTime,jdbcType=TIMESTAMP},
+            UPDATE_TIME   = #{updateTime,jdbcType=TIMESTAMP}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <resultMap id="UserNameAndAddressMap" type="com.tomsung.agdc.vo.UserNameAndAddressVo">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="ADD_X" jdbcType="DECIMAL" property="addX"/>
+        <result column="ADD_Y" jdbcType="DECIMAL" property="addY"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="is_company" jdbcType="INTEGER" property="isCompany"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <collection javaType="java.util.ArrayList" ofType="com.tomsung.agdc.vo.RoleVo" property="roleVos">
+            <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="description" jdbcType="VARCHAR" property="description"/>
+            <result column="auth_time" jdbcType="INTEGER" property="authTime"/>
+        </collection>
+    </resultMap>
+    <resultMap id="FarmerUserMap" type="com.tomsung.agdc.vo.FarmerUserVo">
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="ADMINNAME" jdbcType="VARCHAR" property="adminName"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+        <result column="CREATTIME" jdbcType="VARCHAR" property="creatTime"/>
+    </resultMap>
+    <resultMap id="ExpertUserMap" type="com.tomsung.agdc.vo.ExpertUserVo">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="VIP" jdbcType="INTEGER" property="vip"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <resultMap id="StationUserMap" type="com.tomsung.agdc.vo.StationUserVo">
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="level" jdbcType="INTEGER" property="grade"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+    </resultMap>
+    <resultMap id="PersonTraderUserMap" type="com.tomsung.agdc.vo.PersonTraderUserVo">
+        <result column="USERID" jdbcType="INTEGER" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="level" jdbcType="INTEGER" property="grade"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+    </resultMap>
+    <resultMap id="EnterpriseTraderUserMap" type="com.tomsung.agdc.vo.EnterpriseTraderUserVo">
+        <result column="name" jdbcType="INTEGER" property="name"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="level" jdbcType="INTEGER" property="grade"/>
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <resultMap id="FarmerUserDetailsMap" type="com.tomsung.agdc.vo.FarmerUserDetailsVo">
+        <id column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realusername"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="ADMINNAME" jdbcType="VARCHAR" property="adminName"/>
+        <result column="plant_level" jdbcType="INTEGER" property="plantLevel"/>
+        <result column="lease_demand" jdbcType="INTEGER" property="leaseDemand"/>
+        <result column="is_loans" jdbcType="INTEGER" property="isLoans"/>
+        <result column="loans_money" jdbcType="DECIMAL" property="loansMoney"/>
+        <result column="loans_time" jdbcType="DATE" property="loansTime"/>
+        <result column="USERURL" jdbcType="VARCHAR" property="url"/>
+    </resultMap>
+    <resultMap id="PersonTraderUserDetailsMap" type="com.tomsung.agdc.vo.PersonTraderUserDetailsVo">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realUserName"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="level" jdbcType="INTEGER" property="grade"/>
+        <result column="PROVINCE_NAME" jdbcType="INTEGER" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="INTEGER" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="INTEGER" property="districtName"/>
+        <result column="CROP_NAME" jdbcType="VARCHAR" property="cropName"/>
+        <result column="commission" jdbcType="DECIMAL" property="commission"/>
+    </resultMap>
+    <resultMap id="StationUserDetailsMap" type="com.tomsung.agdc.vo.StationUserDetailsVo">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realUserName"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="is_loans" jdbcType="INTEGER" property="isLoans"/>
+        <result column="loans_money" jdbcType="DECIMAL" property="loansMoney"/>
+        <result column="loans_time" jdbcType="DATE" property="loansTime"/>
+        <result column="CROP_NAMES" jdbcType="VARCHAR" property="cropNames"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="income" jdbcType="INTEGER" property="income"/>
+        <result column="USERURL" jdbcType="VARCHAR" property="userUrl"/>
+    </resultMap>
+    <resultMap id="ExpertUserDetailsMap" type="com.tomsung.agdc.vo.ExpertUserDetailsVo">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALNAME" jdbcType="VARCHAR" property="realName"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="VIP" jdbcType="INTEGER" property="vip"/>
+    </resultMap>
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        select count(USERID) from USER
+        <where>
+            <if test="date !=null">
+                and CREATTIME&gt;#{date,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+    <select id="selectContractCount" resultType="java.lang.Integer">
+        select count(USERID) from USER
+        left join USER_ROLE
+        on USER.USERID = USER_ROLE.user_id
+        <where>USER_ROLE.role_id = 39
+            <if test="date !=null">
+                and CREATTIME&gt;#{date,jdbcType=TIMESTAMP}
+            </if>;
+        </where>
+    </select>
+    <select id="selectUserCountByCity" resultMap="BaseResultMap">
+        select a.CITY_NAME, a.ADD_Y, a.ADD_X, ADDRESS, COUNT(a.USERID) as totalcount, IFNULL(c, 0) as contractcount
+        from USER a
+                 LEFT JOIN (select COUNT(USERID) as c, CITY_NAME
+                            from USER u
+                                     left join USER_ROLE ur on u.USERID = ur.user_id
+                            where ur.role_id = 39
+                            GROUP BY CITY_NAME) b ON a.CITY_NAME = b.city_name
+        GROUP BY CITY_NAME
+    </select>
+    <select id="selectUserCountByProvince" resultMap="BaseResultMap">
+        select a.PROVINCE_NAME, COUNT(a.USERID) as totalcount, IFNULL(c, 0) as contractcount
+        from USER a
+                 LEFT JOIN (select COUNT(USERID) as c, PROVINCE_NAME
+                            from USER u
+                                     left join USER_ROLE ur on u.USERID = ur.user_id
+                            where ur.role_id = 39
+                            GROUP BY PROVINCE_NAME) b ON a.PROVINCE_NAME = b.PROVINCE_NAME
+        GROUP BY PROVINCE_NAME
+    </select>
+    <select id="selectUserCountRank" resultMap="BaseResultMap">
+        select PROVINCE_NAME,COUNT(USERID) c from USER
+        <where>
+            <if test="beginTime != null">
+                AND CREATTIME&gt;#{beginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                AND  <![CDATA[ CREATTIME < #{endTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+        </where>
+        GROUP BY PROVINCE_NAME ORDER BY c DESC LIMIT 0,7;
+    </select>
+    <select id="selectNoContractCountByTime" resultType="java.lang.Integer">
+    <![CDATA[
+        select COUNT(USERID) as totalcount
+        from USER u
+                 left join USER_ROLE ur on u.USERID = ur.user_id
+        where ur.role_id != 39
+          and u.CREATE_TIME < #{time,jdbcType=TIMESTAMP};
+        ]]>
+  </select>
+    <select id="selectContractCountByTime" resultType="java.lang.Integer">
+    <![CDATA[
+        SELECT COUNT(USERID) AS totalcount
+        FROM USER u
+                 LEFT JOIN USER_ROLE ur ON u.USERID = ur.user_id
+        WHERE ur.role_id = 39
+          and u.CREATE_TIME < #{time,jdbcType=TIMESTAMP};
+        ]]>
+  </select>
+    <select id="selectUserCountByTime" resultType="java.lang.Integer">
+    <![CDATA[
+        select COUNT(USERID) as totalcount
+        from USER
+        where CREATTIME < #{time,jdbcType=TIMESTAMP};
+        ]]>
+  </select>
+    <select id="selectContractUserCountByDistrict" resultMap="BaseResultMap">
+        select DISTRICT_NAME,COUNT(USERID) conCount from USER
+        left join USER_ROLE
+        on USER.USERID = USER_ROLE.user_id
+        <where>USER_ROLE.role_id = 39
+            <if test="beginTime != null">
+                AND CREATTIME&gt;#{beginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                AND  <![CDATA[ CREATTIME < #{endTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+        </where>
+        GROUP BY DISTRICT_NAME ORDER BY conCount DESC LIMIT 0,5;
+    </select>
+    <select id="selectUserNameAndAddress" resultMap="UserNameAndAddressMap">
+        SELECT u.ID,
+               u.USERID,
+               u.USERNAME,
+               u.REALUSERNAME,
+               u.ADD_X,
+               u.ADD_Y,
+               FLOOR(DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365) AGE,
+               u.TEL,
+               um.is_company,
+               r.*
+        FROM USER AS u
+                 LEFT JOIN USER_ROLE ur ON ur.user_id = u.USERID
+                 LEFT JOIN ROLE r ON r.role_id = ur.role_id
+                 LEFT JOIN USER_MERCHANT um ON um.user_id = u.USERID
+        WHERE r.role_id NOT IN (37, 38)
+    </select>
+    <select id="selectFarmerUser" resultMap="FarmerUserMap">
+        SELECT u1.USERID,
+        u1.USERNAME,
+        u1.REALUSERNAME,
+        FLOOR(DATEDIFF(CURRENT_DATE, u1.BIRTHDAY) / 365) AGE,
+        u1.SEX,
+        u1.TEL,
+        u1.ADDRESS,
+        u1.PROVINCE_NAME,
+        u1.CITY_NAME,
+        u1.DISTRICT_NAME,
+        date_format(u1.CREATTIME,'%Y-%m-%d') CREATTIME,
+        u2.REALUSERNAME ADMINNAME
+        FROM USER u1
+        LEFT JOIN USER_GROWERS ug ON u1.USERID = ug.user_id
+        LEFT JOIN USER u2 ON u2.USERID = ug.admin_id
+        left join USER_ROLE ur on ur.user_id = u1.USERID
+        where ur.role_id = 39
+        <if test="like != null || like != ''">
+            AND (
+            u1.USERNAME LIKE CONCAT('%',#{like}, '%')
+            OR u1.TEL LIKE CONCAT('%',#{like}, '%')
+            or u1.REALUSERNAME like concat('%',#{like}, '%')
+            )
+        </if>
+        order by u1.CREATTIME DESC
+    </select>
+    <select id="selectPersonTraderUserList" resultMap="PersonTraderUserMap">
+        SELECT u.USERID,
+               u.USERNAME,
+               u.REALUSERNAME,
+               FLOOR(DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365) AGE,
+               u.SEX,
+               u.TEL,
+               u.ADDRESS,
+               u.PROVINCE_NAME,
+               u.CITY_NAME,
+               u.DISTRICT_NAME,
+               um.level
+        FROM USER_MERCHANT um
+                 LEFT JOIN USER u ON u.USERID = um.user_id
+        WHERE um.is_company = 0
+    </select>
+    <select id="selectStationUserList" resultMap="StationUserMap">
+        SELECT
+        u.USERID,
+        u.USERNAME,
+        u.REALUSERNAME,
+        FLOOR(
+        DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365
+        ) AGE,
+        u.SEX,
+        u.TEL,
+        u.ADDRESS,
+        u.PROVINCE_NAME,
+        u.CITY_NAME,
+        u.DISTRICT_NAME,
+        us.user_id,
+        us.level,
+        u.USERURL
+        FROM
+        USER_STATION us
+        LEFT JOIN USER u
+        ON us.user_id = u.USERID
+        <where>
+            <if test="like != null || like != ''">
+                AND (
+                u.USERNAME LIKE CONCAT('%',#{like}, '%')
+                OR u.TEL LIKE CONCAT('%',#{like}, '%')
+                or u.REALUSERNAME like concat('%',#{like}, '%')
+                )
+            </if>
+        </where>
+        order by us.create_time DESC
+    </select>
+    <select id="selectExpertUserList" resultMap="ExpertUserMap">
+        SELECT e.ID, u.USERNAME, u.SEX, u.TEL, u.ADDRESS, ur.role_id VIP
+        FROM EXPERT e
+                 LEFT JOIN USER u ON u.USERID = e.USERID
+                 LEFT JOIN USER_ROLE ur on ur.user_id = u.USERID
+    </select>
+    <select id="selectEnterpriseTraderUserList" resultMap="EnterpriseTraderUserMap">
+        SELECT u.USERID,
+               ue.company_name name,
+               ue.company_type type,
+               ue.level,
+               u.TEL,
+               u.PROVINCE_NAME,
+               u.CITY_NAME,
+               u.DISTRICT_NAME,
+               u.ADDRESS
+        FROM USER_MERCHANT ue
+                 LEFT JOIN USER u ON u.USERID = ue.user_id
+        WHERE ue.is_company = 1
+    </select>
+    <select id="selectFarmerUserDetails" parameterType="java.lang.Integer" resultMap="FarmerUserDetailsMap">
+        SELECT ug.user_id,
+               ug.plant_level,
+               ug.credit_level,
+               ug.lease_demand,
+               ug.is_loans,
+               ug.loans_money,
+               ug.loans_time,
+               u.REALUSERNAME,
+               u.SEX,
+               FLOOR(DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365) AGE,
+               u.TEL,
+               u2.REALUSERNAME                                 ADMINNAME,
+               u.ADDRESS,
+               u.USERURL
+        FROM USER_GROWERS ug
+                 LEFT JOIN USER u ON u.USERID = ug.user_id
+                 LEFT JOIN USER u2 ON ug.ADMIN_ID = u2.USERID
+        WHERE ug.user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <select id="selectPersonTraderUserDetails" parameterType="java.lang.Integer" resultMap="PersonTraderUserDetailsMap">
+        SELECT u.USERID,
+               u.REALUSERNAME,
+               u.SEX,
+               FLOOR(DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365) AGE,
+               u.TEL,
+               u.ADDRESS,
+               um.level,
+               u.PROVINCE_NAME,
+               u.CITY_NAME,
+               u.DISTRICT_NAME,
+               u.USERURL,
+               GROUP_CONCAT(d.crop_name)                       crop_name,
+               SUM(d.commission)                               commission
+        FROM USER u
+                 LEFT JOIN USER_MERCHANT um ON um.user_id = u.USERID
+                 LEFT JOIN DEAL d ON d.buyer = u.USERID
+        WHERE u.USERID = #{userId,jdbcType=INTEGER}
+    </select>
+    <select id="selectStationUserDetails" parameterType="java.lang.Integer" resultMap="StationUserDetailsMap">
+        SELECT u.USERID,
+               u.REALUSERNAME,
+               u.SEX,
+               FLOOR(DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365)                  AGE,
+               u.TEL,
+               CONCAT(u.PROVINCE_NAME, u.CITY_NAME, u.DISTRICT_NAME, u.ADDRESS) ADDRESS,
+               ug.is_loans,
+               ug.loans_money,
+               ug.loans_time,
+               us.level,
+               u.USERURL,
+               GROUP_CONCAT(c.CROP_NAME)                                        CROP_NAMES,
+               us.income,
+               b.*
+        FROM USER u
+                 LEFT JOIN USER_GROWERS ug ON ug.user_id = u.USERID
+                 LEFT JOIN USER_STATION us ON us.user_id = u.USERID
+                 LEFT JOIN STATION_CROP sc ON sc.station_id = u.USERID
+                 LEFT JOIN CROP c ON c.CROP_ID = sc.crop_id
+                 INNER JOIN (SELECT COUNT(*) COUNT
+                             FROM USER_GROWERS ug1
+                             WHERE ug1.admin_id = #{userId,jdbcType=INTEGER}) b
+        WHERE u.USERID = #{userId,jdbcType=INTEGER}
+    </select>
+    <select id="selectExpertUserDetails" parameterType="java.lang.Integer" resultMap="ExpertUserDetailsMap">
+        SELECT e.USERID, e.REALNAME, e.MOBILE_PHONE, e.ADDRESS, u.SEX, ur.role_id VIP
+        FROM EXPERT e
+                 LEFT JOIN USER u ON e.USERID = u.USERID
+                 LEFT JOIN USER_ROLE ur on ur.user_id = u.USERID
+        WHERE e.USERID = #{userId,jdbcType=INTEGER}
+    </select>
+    <resultMap id="UserDetailMap" type="com.tomsung.agdc.vo.UserDetailVo">
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="realUserName"/>
+        <result column="SEX" jdbcType="VARCHAR" property="sex"/>
+        <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="USER_TYPE" jdbcType="INTEGER" property="userType"/>
+        <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="GRADE" jdbcType="INTEGER" property="grade"/>
+        <result column="credit_level" jdbcType="INTEGER" property="creditLevel"/>
+        <result column="lease_demand" jdbcType="INTEGER" property="leaseDemand"/>
+        <result column="is_loans" jdbcType="INTEGER" property="isLoans"/>
+        <result column="loans_money" jdbcType="DECIMAL" property="loansMoney"/>
+        <result column="loans_time" jdbcType="TIMESTAMP" property="loansTime"/>
+        <result column="plant_level" jdbcType="INTEGER" property="plantLevel"/>
+        <result column="admin_name" jdbcType="VARCHAR" property="adminName"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="districtName"/>
+        <result column="USERURL" jdbcType="VARCHAR" property="userUrl"/>
+        <result column="EXPERT_LEVEL" jdbcType="VARCHAR" property="expertLevel"/>
+        <collection javaType="java.util.ArrayList" ofType="com.tomsung.agdc.vo.RoleVo" property="roleVos">
+            <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="description" jdbcType="VARCHAR" property="description"/>
+            <result column="auth_time" jdbcType="INTEGER" property="authTime"/>
+        </collection>
+    </resultMap>
+    <select id="selectUserDetailByUserId" parameterType="java.lang.Integer" resultMap="UserDetailMap">
+        SELECT ug.user_id,
+               u.REALUSERNAME,
+               u.SEX,
+               FLOOR(
+                   DATEDIFF(CURRENT_DATE, u.BIRTHDAY) / 365
+                       )       AGE,
+               ug.admin_id,
+               u.TEL,
+               u.ADDRESS,
+               ug.plant_level,
+               ug.credit_level,
+               ug.lease_demand,
+               ug.is_loans,
+               ug.loans_money,
+               ug.loans_time,
+               u.PROVINCE_NAME,
+               u.CITY_NAME,
+               u.DISTRICT_NAME,
+               u.USERURL,
+               r.*,
+               u2.REALUSERNAME admin_name,
+               e.EXPERT_TYPE   EXPERT_LEVEL
+        FROM USER_GROWERS ug
+                 LEFT JOIN USER u ON u.USERID = ug.user_id
+                 LEFT JOIN EXPERT e ON e.USERID = ug.user_id
+                 LEFT JOIN USER u2 ON u2.USERID = ug.admin_id
+                 LEFT JOIN USER_ROLE ur ON ur.user_id = ug.user_id
+                 LEFT JOIN ROLE r ON r.role_id = ur.role_id
+        WHERE ug.user_id = #{userId}
+    </select>
+    <resultMap id="UserAndBlocksMap" type="com.tomsung.agdc.vo.UserAndBlocksVo">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <collection javaType="java.util.ArrayList" ofType="com.tomsung.agdc.vo.BlockVo" property="blockVos">
+            <id column="block_id" jdbcType="INTEGER" property="blockId"/>
+            <result column="block_name" jdbcType="VARCHAR" property="blockName"/>
+            <result column="block_area" jdbcType="DOUBLE" property="blockArea"/>
+        </collection>
+    </resultMap>
+    <select id="selectUserAndBlocks" resultMap="UserAndBlocksMap">
+        SELECT u.USERID, u.REALUSERNAME, u.TEL, b.block_name, b.block_id, b.block_area
+        FROM USER u
+                 LEFT JOIN BLOCK b ON u.USERID = b.user_id
+    </select>
+    <resultMap id="MemberCountResultMap" type="com.tomsung.agdc.vo.MemberCountVO">
+        <result column="GROWER" jdbcType="INTEGER" property="growerCount"/>
+        <result column="TRAFFICKER" jdbcType="INTEGER" property="traffickerCount"/>
+        <result column="STATIONMASTER" jdbcType="INTEGER" property="stationmasterCount"/>
+        <result column="EXPERT" jdbcType="INTEGER" property="expertCount"/>
+    </resultMap>
+    <select id="selectMemberCount" resultMap="MemberCountResultMap">
+        SELECT (SELECT COUNT(*) FROM USER_GROWERS)    GROWER,
+               (SELECT COUNT(*) FROM USER_MERCHANT)   TRAFFICKER,
+               (SELECT COUNT(*) FROM USER_STATION)    STATIONMASTER,
+               (SELECT COUNT(*) FROM EXPERT)          EXPERT
+    </select>
+    <resultMap id="AreaRankMap" type="com.tomsung.agdc.vo.AreaRankVo">
+        <result column="rank" jdbcType="INTEGER" property="rank"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="city"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+    </resultMap>
+    <select id="selectAreaRank" resultMap="AreaRankMap">
+        SELECT @rownum := @rownum + 1 AS rank, us.*
+        FROM (SELECT COUNT(*) count, u.CITY_NAME
+              FROM USER u
+              GROUP BY u.CITY_NAME
+              ORDER BY COUNT(*) DESC
+              LIMIT 0,7) us,
+             (SELECT @rownum := 0) r
+    </select>
+    <resultMap id="GrowerDistributeMao" type="com.tomsung.agdc.vo.GrowerDistribute">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="USER_NAME" jdbcType="INTEGER" property="growerName"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="province"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="city"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="district"/>
+        <result column="ADD_X" jdbcType="VARCHAR" property="addX"/>
+        <result column="ADD_Y" jdbcType="VARCHAR" property="addY"/>
+        <collection javaType="java.util.ArrayList" ofType="com.tomsung.agdc.vo.GrowerDistribute$Detail"
+                    property="details">
+            <result column="PLANT_NAME" jdbcType="VARCHAR" property="plantName"/>
+            <result column="AREA" jdbcType="VARCHAR" property="area"/>
+            <result column="SPROUT_TIME" jdbcType="VARCHAR" property="sproutTime"/>
+            <collection column="crop_id" javaType="java.util.ArrayList" property="cropGrows"
+                        ofType="com.tomsung.agdc.domain.CropGrow" jdbcType="INTEGER"
+                        select="com.tomsung.agdc.mapper.CropGrowMapper.selectCropGrowByCropId"/>
+        </collection>
+    </resultMap>
+    <select id="selectGrowerDistribute" resultMap="GrowerDistributeMao">
+        SELECT
+            USER.USERID,
+            USER.ADD_X,
+            USER.ADD_Y,
+            USER.REALUSERNAME       USER_NAME,
+            USER.PROVINCE_NAME,
+            USER.CITY_NAME,
+            USER.DISTRICT_NAME,
+            PLANT_COMPACT.crop_id,
+            PLANT_COMPACT.crop_name PLANT_NAME,
+            PLANT_COMPACT.crop_area AREA,
+            CROP_GROW.stage_days,
+            PLANT.`sprout_time`     SPROUT_TIME
+        FROM USER
+            LEFT JOIN USER_ROLE ON (
+                USER.USERID = USER_ROLE.user_id
+                AND USER_ROLE.role_id = 39
+                )
+            LEFT JOIN PLANT_COMPACT ON USER.USERID = PLANT_COMPACT.`user_id`
+            LEFT JOIN PLANT ON PLANT_COMPACT.`id` = PLANT.`compact_id`
+            LEFT JOIN CROP_GROW ON PLANT_COMPACT.`crop_id` = CROP_GROW.`crop_id`
+        GROUP BY USERID,
+            PLANT_NAME
+        ORDER BY PLANT_COMPACT.`crop_area` DESC
+    </select>
+    <resultMap id="ActiveCountMap" type="com.tomsung.agdc.vo.ActiveCountVo">
+        <result column="count" jdbcType="INTEGER" property="userCount"/>
+        <result column="time" jdbcType="VARCHAR" property="time"/>
+    </resultMap>
+    <select id="userActiveCount" resultMap="ActiveCountMap">
+        SELECT COUNT(*) count, DATE_FORMAT(q.POST_TIME, '%Y年%m月') time
+        FROM QUESTION q
+        WHERE q.POST_TIME BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH)
+                      AND NOW()
+        GROUP BY TIME
+    </select>
+    <resultMap id="ExpertActiveCountMap" type="com.tomsung.agdc.vo.ActiveCountVo">
+        <result column="count" jdbcType="INTEGER" property="expertCount"/>
+        <result column="time" jdbcType="VARCHAR" property="time"/>
+    </resultMap>
+    <select id="expertActiveCount" resultMap="ExpertActiveCountMap">
+        SELECT COUNT(*) count, DATE_FORMAT(r.REPLY_TIME, '%Y年%m月') time
+        FROM REPLY r
+                 LEFT JOIN USER_ROLE ur ON ur.user_id = r.USER_ID
+        WHERE r.REPLY_TIME BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH)
+                      AND NOW()
+          AND ur.role_id = 40
+        GROUP BY time
+    </select>
+    <select id="selectGrowersLikeRealName" resultMap="BaseResultMap">
+        select u.USERID, u.REALUSERNAME, u.TEL
+        from USER u
+                 left join USER_ROLE ur on u.USERID = ur.user_id
+        where ur.role_id = 39
+          and u.REALUSERNAME like concat('%', #{realName}, '%')
+    </select>
+    <select id="selectGrowersByAreaCode" resultMap="BaseResultMap">
+        select u.USERID, u.REALUSERNAME, u.TEL
+        from USER u
+                 left join USER_ROLE ur on u.USERID = ur.user_id
+        where ur.role_id = 39
+          and u.AREA_CODE = #{areaCode}
+    </select>
+    <select id="selectCropByUserId" resultType="java.lang.String">
+        SELECT c.CROP_NAME
+        FROM DEAL d
+                 LEFT JOIN CROP c ON c.CROP_ID = d.crop_id
+        WHERE d.buyer = #{userId}
+        GROUP BY c.CROP_NAME
+    </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from USER
+        where USERID = #{userId}
+    </select>
+    <resultMap id="traderDetailYearsPullMap" type="com.tomsung.agdc.vo.TraderDetailYearsPullVO">
+        <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+        <result column="CROP_NAME" jdbcType="VARCHAR" property="cropName"/>
+        <collection column="YEAR" javaType="java.util.ArrayList" ofType="java.lang.Integer" property="years"/>
+    </resultMap>
+    <select id="getTraderDetailYearsPull" parameterType="java.lang.Integer" resultMap="traderDetailYearsPullMap">
+        SELECT DISTINCT YEAR(DEAL.create_time) YEAR, DEAL.crop_id, CROP.CROP_NAME
+        FROM DEAL,
+             CROP
+        WHERE (STATUS = 2
+                   OR STATUS = 4)
+          AND buyer = #{userId}
+          AND DEAL.crop_id = CROP.crop_id
+    </select>
+    <resultMap id="traderPurchaseCompareMap" type="com.tomsung.agdc.vo.TraderPurchaseCompareVO$InnerClass">
+        <result column="YEAR" jdbcType="VARCHAR" property="year"/>
+        <result column="SUM" jdbcType="DECIMAL" property="count"/>
+    </resultMap>
+    <select id="getTraderPurchaseCompare" parameterType="java.util.Map" resultMap="traderPurchaseCompareMap">
+        SELECT
+        YEAR(CREATE_TIME) YEAR,
+        SUM(weight) / 1000 SUM
+        FROM
+        DEAL
+        WHERE buyer = #{userId}
+        <if test="cropId != null">
+            AND crop_id = #{cropId}
+        </if>
+        <if test="startYear != null">
+            <![CDATA[AND YEAR(CREATE_TIME) >= #{startYear}]]>
+        </if>
+        <if test="endYear != null">
+            <![CDATA[AND YEAR(CREATE_TIME) <= #{endYear}]]>
+        </if>
+        AND (STATUS = 2
+        OR STATUS = 4)
+        GROUP BY YEAR(CREATE_TIME)
+    </select>
+    <select id="getSubsidy" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select min_quantity
+        from SUBSIDY
+        where crop_id = #{cropId}
+    </select>
+    <select id="getTraderIncomeCompare" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT DISTINCT YEAR(DEAL.create_time) YEAR
+        FROM DEAL,
+             CROP
+        WHERE (STATUS = 2
+                   OR STATUS = 4)
+          AND buyer = #{userId}
+    </select>
+    <resultMap id="GraderIncomeCompareMap" type="com.tomsung.agdc.vo.TraderIncomeCompareVO">
+        <result column="YEAR" jdbcType="INTEGER" property="year"/>
+        <result column="MONEY" jdbcType="DECIMAL" property="money"/>
+    </resultMap>
+    <select id="getGraderIncomeCompare" parameterType="java.util.Map" resultMap="GraderIncomeCompareMap">
+        SELECT
+        YEAR(create_time) YEAR,
+        SUM(total_subsidy) MONEY
+        from DEAL
+        where (status = 2 or status = 4)
+        and buyer = #{userId}
+        <if test="startYear != null">
+            <![CDATA[AND YEAR(CREATE_TIME) >= #{startYear}]]>
+        </if>
+        <if test="endYear != null">
+            <![CDATA[AND YEAR(CREATE_TIME) <= #{endYear}]]>
+        </if>
+        group by YEAR
+    </select>
+    <resultMap id="StationMembersMap" type="com.tomsung.agdc.vo.StationMembersVO$InnerClass">
+        <result column="USERNAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="PLANT_AREA" jdbcType="DECIMAL" property="plantArea"/>
+        <result column="IS_LOAN" jdbcType="INTEGER" property="isLoan"/>
+        <result column="LOAN_MONEY" jdbcType="DECIMAL" property="loanMoney"/>
+        <result column="LOAN_TIME" jdbcType="DATE" property="loanTime"/>
+    </resultMap>
+    <select id="getStationMembers" parameterType="java.lang.Integer" resultMap="StationMembersMap">
+        SELECT USER.REALUSERNAME USERNAME,
+               USER_GROWERS.PLANT_AREA,
+               USER_GROWERS.`is_loans`  IS_LOAN,
+               USER_GROWERS.loans_money LOAN_MONEY,
+               USER_GROWERS.loans_time  LOAN_TIME
+        FROM USER,
+             USER_GROWERS
+        WHERE USER.`USERID` = USER_GROWERS.`user_id`
+          AND USER_GROWERS.`ADMIN_ID` = #{userId}
+    </select>
+    <resultMap id="StationMembersDistributeMap" type="com.tomsung.agdc.vo.StationMemberDistributeVO$InnerClass">
+        <result column="USERID" jdbcType="INTEGER" property="userId"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="PLANT_AREA" jdbcType="DECIMAL" property="plantArea"/>
+        <result column="ADD_X" jdbcType="DECIMAL" property="gpsX"/>
+        <result column="ADD_Y" jdbcType="DECIMAL" property="gpsY"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="province"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="city"/>
+        <result column="DISTRICT_NAME" jdbcType="VARCHAR" property="district"/>
+    </resultMap>
+    <select id="getStationMembersDistribute" parameterType="java.lang.Integer" resultMap="StationMembersDistributeMap">
+        SELECT USER.USERID,
+               USER.REALUSERNAME,
+               USER_GROWERS.PLANT_AREA,
+               USER.ADD_X,
+               USER.ADD_Y,
+               USER.PROVINCE_NAME,
+               USER.CITY_NAME,
+               USER.DISTRICT_NAME
+        FROM USER,
+             USER_GROWERS
+        WHERE USER_GROWERS.ADMIN_ID = #{userId}
+          and USER.USERID = USER_GROWERS.user_id
+    </select>
+    <select id="selectAllActivityUsers" resultMap="BaseResultMap">
+        select u.USERNAME, u.PROVINCE_NAME, u.CITY_NAME, u.DISTRICT_NAME, u.ADDRESS, qrr.QUESTION_COUNT
+        from USER u,
+             QUESTION_REPLY_RECORD qrr
+        where qrr.USERID = u.USERID
+    </select>
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from USER
+    </select>
+    <resultMap id="EnterpriseTradeUserDetailsMap" type="com.tomsung.agdc.vo.EnterpriseTradeUserDetailsVo">
+        <result column="company_name" jdbcType="VARCHAR" property="enterpriseName"/>
+        <result column="company_type" jdbcType="INTEGER" property="enterpriseType"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="CROP_NAME" jdbcType="VARCHAR" property="cropNames"/>
+        <result column="total_subsidy" jdbcType="INTEGER" property="subsidies"/>
+        <result column="weight" jdbcType="INTEGER" property="buyCount"/>
+        <result column="USERURL" jdbcType="VARCHAR" property="userUrl"/>
+    </resultMap>
+    <select id="selectEnterpriseTradeUserDetails" resultMap="EnterpriseTradeUserDetailsMap">
+        SELECT um.company_name,
+               um.company_type,
+               u.TEL,
+               CONCAT(
+                   u.PROVINCE_NAME,
+                   u.CITY_NAME,
+                   u.DISTRICT_NAME,
+                   u.ADDRESS
+                       )                 ADDRESS,
+               um.level,
+               GROUP_CONCAT(c.CROP_NAME) CROP_NAME,
+               SUM(d.total_subsidy)      total_subsidy,
+               SUM(d.weight)             weight,
+               u.USERURL
+        FROM USER_MERCHANT um
+                 LEFT JOIN USER u ON u.USERID = um.user_id
+                 LEFT JOIN DEAL d ON d.buyer = um.user_id
+                 LEFT JOIN CROP c ON c.CROP_ID = d.crop_id
+        WHERE um.is_company = 1
+          AND um.user_id = #{userId}
+    </select>
+    <resultMap id="AreaUserRankMap" type="com.tomsung.agdc.vo.AreaUserRankVo">
+        <result column="vip" jdbcType="INTEGER" property="vip"/>
+        <result column="not_vip" jdbcType="INTEGER" property="notVip"/>
+        <result column="address" jdbcType="INTEGER" property="address"/>
+    </resultMap>
+    <select id="selectAreaUserRank" resultMap="AreaUserRankMap">
+        SELECT *
+        FROM (SELECT COUNT(*) vip, CONCAT(p.name, c.name) address, u.AREA_CODE c
+        FROM USER u
+        LEFT JOIN USER_ROLE ur ON u.USERID = ur.user_id
+        LEFT JOIN CITY c ON c.code = LEFT(u.AREA_CODE, 4)
+        LEFT JOIN PROVINCE p ON c.province_code = p.code
+        WHERE ur.role_id = 39
+            AND u.CREATE_TIME &lt; #{beginTime}
+            AND u.CREATE_TIME > #{endTime}
+        GROUP BY LEFT(u.AREA_CODE, 4)) a
+
+        LEFT JOIN (SELECT COUNT(*) not_vip, u.AREA_CODE d
+        FROM USER u
+        LEFT JOIN USER_ROLE ur ON u.USERID = ur.user_id
+        LEFT JOIN CITY c ON c.code = LEFT(u.AREA_CODE, 4)
+        LEFT JOIN PROVINCE p ON c.province_code = p.code
+        WHERE u.USERID NOT IN (SELECT USER_ROLE.user_id FROM USER_ROLE WHERE USER_ROLE.role_id=39)
+            AND u.CREATE_TIME &lt; #{beginTime}
+            AND u.CREATE_TIME > #{endTime}
+        GROUP BY LEFT(u.AREA_CODE, 4)) b ON a.c = b.d
+        ORDER by vip desc
+    </select>
+    <resultMap id="UserDistributionMap" type="com.tomsung.agdc.vo.UserDistributionVo">
+        <result column="vip" jdbcType="INTEGER" property="vip"/>
+        <result column="not_vip" jdbcType="INTEGER" property="notVip"/>
+        <result column="address" jdbcType="INTEGER" property="address"/>
+    </resultMap>
+    <select id="selectUserDistribution" resultMap="UserDistributionMap">
+        SELECT *
+        FROM (SELECT COUNT(*) vip, CONCAT(p.name, c.name) address, u.AREA_CODE c
+              FROM USER u
+                       LEFT JOIN USER_ROLE ur ON u.USERID = ur.user_id
+                       LEFT JOIN CITY c ON c.code = LEFT(u.AREA_CODE, 4)
+                       LEFT JOIN PROVINCE p ON c.province_code = p.code
+              WHERE ur.role_id = 39
+              GROUP BY LEFT(u.AREA_CODE, 4)) a
+                 LEFT JOIN (SELECT COUNT(*) not_vip, u.AREA_CODE d
+                            FROM USER u
+                                     LEFT JOIN USER_ROLE ur ON u.USERID = ur.user_id
+                                     LEFT JOIN CITY c ON c.code = LEFT(u.AREA_CODE, 4)
+                                     LEFT JOIN PROVINCE p ON c.province_code = p.code
+                            WHERE ur.role_id != 39
+                            GROUP BY LEFT(u.AREA_CODE, 4)) b ON a.c = b.d
+    </select>
+</mapper>

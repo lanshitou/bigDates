@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.UserEarnMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.UserEarn">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+        <result column="crop_name" jdbcType="VARCHAR" property="cropName"/>
+        <result column="plan_unit_price" jdbcType="DECIMAL" property="planUnitPrice"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+        <result column="annual" jdbcType="INTEGER" property="annual"/>
+        <result column="unit_price" jdbcType="DECIMAL" property="unitPrice"/>
+        <result column="plan_cost" jdbcType="DECIMAL" property="planCost"/>
+        <result column="cost" jdbcType="DECIMAL" property="cost"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="ProfitResultMap" type="com.tomsung.agdc.vo.TotalProfitVO">
+        <result column="annual" property="annual"/>
+        <result column="profit" property="profit"/>
+        <result column="plan_profit" property="planProfit"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, crop_id, crop_name, plan_unit_price, sales_volume, annual, unit_price,
+    plan_cost, cost, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from USER_EARN
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectList" resultMap="BaseResultMap">
+        select annual, crop_id, crop_name, plan_unit_price, unit_price, sales_volume, plan_cost, cost
+        from USER_EARN
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="annual != null">
+                and annual = #{annual}
+            </if>
+            <if test="beginAnnual != null and endAnnual != null">
+                and (annual &gt;= #{beginAnnual} and annual &lt;= #{endAnnual})
+            </if>
+        </where>
+        order by annual asc
+    </select>
+    <select id="selectAnnualByUserId" resultType="java.lang.Integer">
+        select annual
+        from USER_EARN
+        where user_id = #{userId}
+        group by annual
+    </select>
+    <select id="selectTotalProfit" resultMap="ProfitResultMap">
+        select annual, sum(unit_price * sales_volume - plan_cost) as profit, sum(plan_unit_price * sales_volume - plan_cost) as plan_profit
+        from USER_EARN
+        where user_id = #{userId} and annual &gt;= #{beginAnnual} and annual &lt;= #{endAnnual}
+        group by annual
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from USER_EARN
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.UserEarn">
+    insert into USER_EARN (id, user_id, crop_id,
+      crop_name, plan_unit_price, sales_volume,
+      annual, unit_price, plan_cost,
+      cost, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{cropId,jdbcType=INTEGER},
+      #{cropName,jdbcType=VARCHAR}, #{planUnitPrice,jdbcType=DECIMAL}, #{salesVolume,jdbcType=INTEGER},
+      #{annual,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL}, #{planCost,jdbcType=DECIMAL},
+      #{cost,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.UserEarn">
+        insert into USER_EARN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="cropId != null">
+                crop_id,
+            </if>
+            <if test="cropName != null">
+                crop_name,
+            </if>
+            <if test="planUnitPrice != null">
+                plan_unit_price,
+            </if>
+            <if test="salesVolume != null">
+                sales_volume,
+            </if>
+            <if test="annual != null">
+                annual,
+            </if>
+            <if test="unitPrice != null">
+                unit_price,
+            </if>
+            <if test="planCost != null">
+                plan_cost,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="cropId != null">
+                #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="cropName != null">
+                #{cropName,jdbcType=VARCHAR},
+            </if>
+            <if test="planUnitPrice != null">
+                #{planUnitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="salesVolume != null">
+                #{salesVolume,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="unitPrice != null">
+                #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="planCost != null">
+                #{planCost,jdbcType=DECIMAL},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.UserEarn">
+        update USER_EARN
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="cropId != null">
+                crop_id = #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="cropName != null">
+                crop_name = #{cropName,jdbcType=VARCHAR},
+            </if>
+            <if test="planUnitPrice != null">
+                plan_unit_price = #{planUnitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume = #{salesVolume,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                annual = #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="unitPrice != null">
+                unit_price = #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="planCost != null">
+                plan_cost = #{planCost,jdbcType=DECIMAL},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.UserEarn">
+    update USER_EARN
+    set user_id = #{userId,jdbcType=INTEGER},
+      crop_id = #{cropId,jdbcType=INTEGER},
+      crop_name = #{cropName,jdbcType=VARCHAR},
+      plan_unit_price = #{planUnitPrice,jdbcType=DECIMAL},
+      sales_volume = #{salesVolume,jdbcType=INTEGER},
+      annual = #{annual,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      plan_cost = #{planCost,jdbcType=DECIMAL},
+      cost = #{cost,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <resultMap id="IncomeComparisonMap" type="com.tomsung.agdc.vo.AreaAndAvgVo">
+        <result column="area"  jdbcType="DECIMAL" property="area"/>
+        <result column="avg"  jdbcType="DECIMAL" property="avg"/>
+    </resultMap>
+<select id="selectIncomeComparison" resultMap="IncomeComparisonMap">
+    SELECT area, total_price / AREA avg
+    FROM (SELECT SUM(b.block_area) area, ue.sales_volume * ue.unit_price total_price
+    FROM USER u
+    LEFT JOIN USER_EARN ue
+    ON u.USERID = ue.user_id
+    LEFT JOIN PLANT_COMPACT pc ON pc.user_id = ue.user_id
+    AND pc.crop_id = ue.crop_id
+    LEFT JOIN BLOCK b ON pc.block_id = b.block_id
+    WHERE ue.crop_id = #{crop_id}
+    AND ue.annual = #{annual}
+    <if test="type == 1">
+       AND u.USER_NUM IS NOT NULL
+    </if>
+    GROUP BY total_price) a
+</select>
+    <select id="selectEarnAnnual" resultType="java.lang.Integer">
+        SELECT ue.annual
+        FROM USER_EARN ue
+        GROUP BY ue.annual
+    </select>
+    <resultMap id="EarnCropMap" type="com.tomsung.agdc.vo.EarnCropVo">
+        <result column="crop_id"  jdbcType="INTEGER" property="id"/>
+        <result column="CROP_NAME"  jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <select id="selectEranCrop" resultMap="EarnCropMap">
+        SELECT ue.crop_id, c.CROP_NAME
+        FROM USER_EARN ue
+                 LEFT JOIN CROP c ON c.CROP_ID = ue.crop_id
+        WHERE ue.annual = #{annual}
+        GROUP BY ue.crop_id
+    </select>
+</mapper>

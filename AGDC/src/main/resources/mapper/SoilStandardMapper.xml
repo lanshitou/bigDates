@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.SoilStandardMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.SoilStandard">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="CROP_ID" jdbcType="INTEGER" property="cropId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="OUTPUT" jdbcType="INTEGER" property="output"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="ListResultMap" type="com.tomsung.agdc.domain.SoilStandard" extends="BaseResultMap">
+        <result column="CROP_NAME" property="cropName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, CROP_ID, NAME, OUTPUT, CREATE_TIME, UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SOIL_STANDARD
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBlockId" resultMap="ListResultMap">
+       select ss.ID, ss.CROP_ID, ss.NAME, ss.OUTPUT, c.CROP_NAME
+       from SOIL_STANDARD ss
+       left join PLANT_COMPACT pc on ss.CROP_ID = pc.CROP_ID
+       left join CROP c on c.CROP_ID = ss.CROP_ID
+       where pc.BLOCK_ID = #{blockId}
+    </select>
+    <select id="selectById" resultMap="ListResultMap">
+        select ss.CROP_ID, c.CROP_NAME
+        from SOIL_STANDARD ss
+        left join CROP c on ss.CROP_ID = c.CROP_ID
+        where ss.ID = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SOIL_STANDARD
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.SoilStandard">
+    insert into SOIL_STANDARD (ID, CROP_ID, NAME, 
+      OUTPUT, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{cropId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{output,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.SoilStandard">
+        insert into SOIL_STANDARD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="cropId != null">
+                CROP_ID,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="output != null">
+                OUTPUT,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cropId != null">
+                #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                #{output,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.SoilStandard">
+        update SOIL_STANDARD
+        <set>
+            <if test="cropId != null">
+                CROP_ID = #{cropId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                OUTPUT = #{output,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.SoilStandard">
+    update SOIL_STANDARD
+    set CROP_ID = #{cropId,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      OUTPUT = #{output,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

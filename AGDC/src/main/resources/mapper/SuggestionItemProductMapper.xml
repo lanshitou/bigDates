@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.SuggestionItemProductMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.SuggestionItemProduct">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="ITEM_ID" jdbcType="INTEGER" property="itemId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="SUBTITLE" jdbcType="VARCHAR" property="subtitle"/>
+        <result column="UNIT_PRICE" jdbcType="DECIMAL" property="unitPrice"/>
+        <result column="SPECIFICATION" jdbcType="VARCHAR" property="specification"/>
+        <result column="QUANTITY" jdbcType="INTEGER" property="quantity"/>
+        <result column="IMAGE_URL" jdbcType="VARCHAR" property="imageUrl"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, ITEM_ID, NAME, SUBTITLE, UNIT_PRICE, SPECIFICATION, QUANTITY, IMAGE_URL, ITEM_NAME, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SUGGESTION_ITEM_PRODUCT
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectSuggestionId" resultMap="BaseResultMap">
+        select sip.IMAGE_URL, sip.NAME, sip.SUBTITLE, sip.SPECIFICATION, sip.UNIT_PRICE, sip.QUANTITY, sip.ITEM_NAME
+        from SUGGESTION_ITEM_PRODUCT sip
+        left join SUGGESTION_ITEM si on sip.ITEM_ID = si.id
+        where si.suggestion_id = #{suggestionId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SUGGESTION_ITEM_PRODUCT
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.SuggestionItemProduct">
+    insert into SUGGESTION_ITEM_PRODUCT (ID, ITEM_ID, NAME, 
+      SUBTITLE, UNIT_PRICE, SPECIFICATION, 
+      QUANTITY, IMAGE_URL, ITEM_NAME, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DECIMAL}, #{specification,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.SuggestionItemProduct">
+        insert into SUGGESTION_ITEM_PRODUCT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="itemId != null">
+                ITEM_ID,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="subtitle != null">
+                SUBTITLE,
+            </if>
+            <if test="unitPrice != null">
+                UNIT_PRICE,
+            </if>
+            <if test="specification != null">
+                SPECIFICATION,
+            </if>
+            <if test="quantity != null">
+                QUANTITY,
+            </if>
+            <if test="imageUrl != null">
+                IMAGE_URL,
+            </if>
+            <if test="itemName != null">
+                ITEM_NAME,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="unitPrice != null">
+                #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="specification != null">
+                #{specification,jdbcType=VARCHAR},
+            </if>
+            <if test="quantity != null">
+                #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.SuggestionItemProduct">
+        update SUGGESTION_ITEM_PRODUCT
+        <set>
+            <if test="itemId != null">
+                ITEM_ID = #{itemId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="unitPrice != null">
+                UNIT_PRICE = #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="specification != null">
+                SPECIFICATION = #{specification,jdbcType=VARCHAR},
+            </if>
+            <if test="quantity != null">
+                QUANTITY = #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="imageUrl != null">
+                IMAGE_URL = #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.SuggestionItemProduct">
+    update SUGGESTION_ITEM_PRODUCT
+    set ITEM_ID = #{itemId,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+      UNIT_PRICE = #{unitPrice,jdbcType=DECIMAL},
+      SPECIFICATION = #{specification,jdbcType=VARCHAR},
+      QUANTITY = #{quantity,jdbcType=INTEGER},
+      IMAGE_URL = #{imageUrl,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

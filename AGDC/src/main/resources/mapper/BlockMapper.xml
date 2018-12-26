@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.BlockMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.Block">
+        <id column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="garden_no" jdbcType="INTEGER" property="gardenNo"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="region_address" jdbcType="VARCHAR" property="regionAddress"/>
+        <result column="block_name" jdbcType="VARCHAR" property="blockName"/>
+        <result column="block_area" jdbcType="DOUBLE" property="blockArea"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="area_code" jdbcType="VARCHAR" property="areaCode"/>
+        <result column="address_x" jdbcType="DECIMAL" property="addressX"/>
+        <result column="address_y" jdbcType="DECIMAL" property="addressY"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        block_id, garden_no, user_id, region_address, block_name, block_area, address, area_code,
+        address_x, address_y, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BLOCK
+        where block_id = #{blockId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from BLOCK
+        where block_id = #{blockId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.Block">
+        insert into BLOCK (block_id,
+                           garden_no,
+                           user_id,
+                           region_address,
+                           block_name,
+                           block_area,
+                           address,
+                           area_code,
+                           address_x,
+                           address_y,
+                           create_time,
+                           update_time)
+        values (#{blockId,jdbcType=INTEGER},
+                #{gardenNo,jdbcType=INTEGER},
+                #{userId,jdbcType=INTEGER},
+                #{regionAddress,jdbcType=VARCHAR},
+                #{blockName,jdbcType=VARCHAR},
+                #{blockArea,jdbcType=DOUBLE},
+                #{address,jdbcType=VARCHAR},
+                #{areaCode,jdbcType=VARCHAR},
+                #{addressX,jdbcType=DECIMAL},
+                #{addressY,jdbcType=DECIMAL},
+                #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.Block">
+        insert into BLOCK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blockId != null">
+                block_id,
+            </if>
+            <if test="gardenNo != null">
+                garden_no,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="regionAddress != null">
+                region_address,
+            </if>
+            <if test="blockName != null">
+                block_name,
+            </if>
+            <if test="blockArea != null">
+                block_area,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="areaCode != null">
+                area_code,
+            </if>
+            <if test="addressX != null">
+                address_x,
+            </if>
+            <if test="addressY != null">
+                address_y,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blockId != null">
+                #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="gardenNo != null">
+                #{gardenNo,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="regionAddress != null">
+                #{regionAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="blockName != null">
+                #{blockName,jdbcType=VARCHAR},
+            </if>
+            <if test="blockArea != null">
+                #{blockArea,jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="addressX != null">
+                #{addressX,jdbcType=DECIMAL},
+            </if>
+            <if test="addressY != null">
+                #{addressY,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.Block">
+        update BLOCK
+        <set>
+            <if test="gardenNo != null">
+                garden_no = #{gardenNo,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="regionAddress != null">
+                region_address = #{regionAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="blockName != null">
+                block_name = #{blockName,jdbcType=VARCHAR},
+            </if>
+            <if test="blockArea != null">
+                block_area = #{blockArea,jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                area_code = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="addressX != null">
+                address_x = #{addressX,jdbcType=DECIMAL},
+            </if>
+            <if test="addressY != null">
+                address_y = #{addressY,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where block_id = #{blockId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.Block">
+        update BLOCK
+        set garden_no      = #{gardenNo,jdbcType=INTEGER},
+            user_id        = #{userId,jdbcType=INTEGER},
+            region_address = #{regionAddress,jdbcType=VARCHAR},
+            block_name     = #{blockName,jdbcType=VARCHAR},
+            block_area     = #{blockArea,jdbcType=DOUBLE},
+            address        = #{address,jdbcType=VARCHAR},
+            area_code      = #{areaCode,jdbcType=VARCHAR},
+            address_x      = #{addressX,jdbcType=DECIMAL},
+            address_y      = #{addressY,jdbcType=DECIMAL},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP}
+        where block_id = #{blockId,jdbcType=INTEGER}
+    </update>
+    <resultMap id="BlockList" type="com.tomsung.agdc.vo.BlockVo">
+        <id column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="block_name" jdbcType="VARCHAR" property="blockName"/>
+        <result column="block_area" jdbcType="DOUBLE" property="blockArea"/>
+    </resultMap>
+    <resultMap id="OverviewMap" type="com.tomsung.agdc.vo.OverviewVo">
+        <result column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="crop_name" jdbcType="VARCHAR" property="cropName"/>
+        <result column="crop_area" jdbcType="DOUBLE" property="cropArea"/>
+        <result column="scene" jdbcType="INTEGER" property="scene"/>
+        <result column="reap_time" jdbcType="DATE" property="reapTime"/>
+        <result column="grow_time" jdbcType="DATE" property="growTime"/>
+        <result column="plan_output" jdbcType="INTEGER" property="planOutput"/>
+        <result column="summ" jdbcType="INTEGER" property="summ"/>
+        <result column="annual" jdbcType="INTEGER" property="annual"/>
+    </resultMap>
+    <select id="selectBlockListByUserId" resultMap="BlockList" parameterType="java.lang.Integer">
+        SELECT b.block_id, block_name, block_area
+        FROM BLOCK b
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <select id="selectOverviewByblockId" resultMap="OverviewMap" parameterType="java.lang.Integer">
+        SELECT pc.crop_id,
+               pc.block_id,
+               pc.crop_name,
+               pc.crop_area,
+               pc.scene,
+               pc.grow_time,
+               pc.plan_output,
+               p.reap_time,
+               p.annual,
+               SUM(p.output) summ
+        FROM PLANT p
+                 LEFT JOIN PLANT_COMPACT pc ON p.compact_id = pc.id
+        WHERE pc.block_id = #{blockId}
+        GROUP BY pc.crop_id, p.annual
+    </select>
+    <resultMap id="UserBlockMap" type="com.tomsung.agdc.vo.UserBlockVo">
+        <result column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="crop_name" jdbcType="VARCHAR" property="cropName"/>
+        <result column="block_area" jdbcType="DOUBLE" property="blockArea"/>
+        <result column="address" jdbcType="DOUBLE" property="address"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="TEL" jdbcType="DOUBLE" property="tel"/>
+    </resultMap>
+    <select id="selectDetailByBlockId" resultMap="UserBlockMap" parameterType="java.lang.Integer">
+        SELECT b.block_id, b.block_area, b.address, pc.crop_name, u.REALUSERNAME, u.TEL
+        FROM BLOCK b
+                 LEFT JOIN PLANT_COMPACT pc ON pc.block_id = b.block_id
+                 LEFT JOIN USER u ON u.USERID = b.user_id
+        WHERE b.block_id = #{blockId}
+    </select>
+    <resultMap id="BlockRankMap" type="com.tomsung.agdc.vo.BlockRankVo">
+        <result column="rank" jdbcType="DOUBLE" property="rank"/>
+        <result column="REALUSERNAME" jdbcType="DOUBLE" property="name"/>
+        <result column="summ" jdbcType="INTEGER" property="summ"/>
+    </resultMap>
+    <select id="selectBlockRank" resultMap="BlockRankMap">
+        SELECT @rownum := @rownum + 1 AS rank, su.*
+        FROM (SELECT SUM(p.output) summ, u.REALUSERNAME
+              FROM PLANT_COMPACT pc
+                       LEFT JOIN PLANT p ON pc.id = p.id
+                       LEFT JOIN BLOCK b ON b.block_id = pc.block_id
+                       LEFT JOIN USER u ON u.USERID = b.user_id
+              GROUP BY pc.block_id
+              ORDER BY summ DESC
+              LIMIT 0, 7) su,
+             (SELECT @rownum := 0) r
+    </select>
+    <select id="selectBlockAreaTotal" resultType="java.lang.Double">
+        SELECT SUM(b.block_area) FROM BLOCK b
+        <where>
+            <if test="date != null">
+                create_time > #{date};
+            </if>
+        </where>
+    </select>
+    <select id="selectBlockCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM BLOCK b
+        <where>
+            <if test="date != null">
+                create_time > #{date};
+            </if>
+        </where>
+    </select>
+    <resultMap id="FarmlandYieldMap" type="com.tomsung.agdc.vo.FarmlandYieldVo">
+        <result column="block_id" jdbcType="INTEGER" property="farmlandid"/>
+        <result column="block_name" jdbcType="VARCHAR" property="farmName"/>
+        <result column="output" jdbcType="DECIMAL" property="plantYield"/>
+        <result column="plan_output" jdbcType="DECIMAL" property="farmYield"/>
+        <result column="plant_time" jdbcType="DATE" property="plantTime"/>
+    </resultMap>
+    <select id="selectFarmlandYieldInfo" resultMap="FarmlandYieldMap">
+        SELECT b.block_id, b.block_name, pc.plan_output, p.output, DATE_FORMAT(pc.grow_time, '%Y-%m-%d') plant_time
+        FROM BLOCK b
+                 LEFT JOIN PLANT_COMPACT pc ON pc.block_id = b.block_id
+                 LEFT JOIN PLANT p ON p.compact_id = pc.id
+        WHERE pc.grow_time >= #{beginTime}
+          AND pc.grow_time &lt;= #{endTime}
+    </select>
+    <resultMap id="FarmlandPointMap" type="com.tomsung.agdc.vo.FarmlandPointVo">
+        <result column="address_x" jdbcType="DECIMAL" property="farmX"/>
+        <result column="address_y" jdbcType="DECIMAL" property="farmY"/>
+        <result column="block_id" jdbcType="INTEGER" property="farmlandid"/>
+        <result column="block_name" jdbcType="VARCHAR" property="farmName"/>
+    </resultMap>
+    <select id="selectAllFarmlandPoints" resultMap="FarmlandPointMap">
+        SELECT b.block_id, b.block_name, b.address_x, b.address_y
+        FROM BLOCK b
+    </select>
+    <resultMap id="RankMap" type="com.tomsung.agdc.vo.RankVo">
+        <result column="rank" jdbcType="INTEGER" property="num"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="name"/>
+        <result column="summ" jdbcType="INTEGER" property="value"/>
+    </resultMap>
+    <select id="selectContractUserYield" resultMap="RankMap">
+        SELECT @rownum := @rownum + 1 AS rank, b.*
+        FROM (SELECT u.REALUSERNAME, SUM(p.output) summ
+              FROM PLANT_COMPACT pc
+                       LEFT JOIN BLOCK b ON pc.block_id = b.block_id
+                       LEFT JOIN PLANT p ON p.compact_id = pc.id
+                       LEFT JOIN USER u ON u.USERID = b.user_id
+              GROUP BY b.user_id
+              ORDER BY summ DESC) b,
+             (SELECT @rownum := 0) r
+    </select>
+    <resultMap id="AreaSizeRankMap" type="com.tomsung.agdc.vo.AreaSizeRankVo">
+        <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+        <result column="summ" jdbcType="DECIMAL" property="summ"/>
+        <result column="area_code" jdbcType="INTEGER" property="areaCode"/>
+    </resultMap>
+    <select id="selectFarmlandArea" resultMap="AreaSizeRankMap">
+        SELECT SUM(b.block_area) summ, CONCAT(p.name, c.name) cityName, b.area_code
+        FROM BLOCK b
+                 LEFT JOIN CITY c ON c.code = LEFT(b.area_code, 4)
+                 LEFT JOIN PROVINCE p ON c.province_code = p.code
+        GROUP BY CONCAT(p.name, c.name)
+        ORDER BY summ DESC
+        LIMIT 5
+    </select>
+    <select id="cropCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT DISTINCT PLANT_COMPACT.crop_id
+              FROM BLOCK
+                       INNER JOIN PLANT_COMPACT ON PLANT_COMPACT.block_id = BLOCK.block_id
+              where BLOCK.area_code LIKE concat(#{areaCode}, '%')) c
+    </select>
+    <select id="selectAllCropCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT COUNT(*) FROM PLANT_COMPACT GROUP BY PLANT_COMPACT.crop_id) c
+    </select>
+    <select id="selectAllBlockCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT COUNT(*) FROM PLANT_COMPACT GROUP BY PLANT_COMPACT.block_id) b
+    </select>
+    <resultMap id="OverviewMapMap" type="com.tomsung.agdc.vo.OverviewMapVo$Inner">
+        <result column="block_area" jdbcType="DECIMAL" property="blockArea"/>
+        <result column="area_code" jdbcType="INTEGER" property="areaCode"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="address_x" jdbcType="DECIMAL" property="addressX"/>
+        <result column="address_y" jdbcType="DECIMAL" property="addressY"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <select id="selectOverviewMap" resultMap="OverviewMapMap">
+        SELECT SUM(b.block_area) block_area, b.area_code, COUNT(*) COUNT, b.address_x, b.address_y, a.name
+        FROM BLOCK b
+                 LEFT JOIN AREA a ON a.code = b.area_code
+        GROUP BY b.area_code
+    </select>
+    <select id="selectCropNames" resultType="java.lang.String">
+        SELECT c.CROP_NAME
+        FROM BLOCK b
+                 LEFT JOIN PLANT_COMPACT pc ON pc.block_id = b.block_id
+                 LEFT JOIN CROP c ON pc.crop_id = c.CROP_ID
+        WHERE b.area_code = #{areaCode}
+        GROUP BY pc.crop_id
+    </select>
+    <select id="selectBlockCityCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (SELECT COUNT(*),b.area_code FROM BLOCK b
+        <if test="date != null">
+            WHERE b.create_time > #{date}
+        </if>
+        GROUP BY LEFT(b.area_code,4)) a
+    </select>
+    <resultMap id="BlockDataMap" type="com.tomsung.agdc.vo.BlockDataMapVo">
+        <result column="block_area" jdbcType="DECIMAL" property="area"/>
+        <result column="block_name" jdbcType="VARCHAR" property="address"/>
+        <result column="REALUSERNAME" jdbcType="VARCHAR" property="user"/>
+        <result column="crop_name" jdbcType="VARCHAR" property="crop"/>
+        <result column="address_x" jdbcType="DECIMAL" property="addX"/>
+        <result column="address_y" jdbcType="DECIMAL" property="addY"/>
+    </resultMap>
+    <select id="selectBlockDataMap" resultMap="BlockDataMap">
+        SELECT b.block_name, u.REALUSERNAME, pc.crop_name, b.block_area, b.address_x, b.address_y
+        FROM BLOCK b
+        LEFT JOIN USER u ON b.user_id = u.USERID
+        LEFT JOIN PLANT_COMPACT pc ON pc.block_id = b.block_id
+        <if test="type == 0">
+            WHERE b.garden_no IS NULL
+        </if>
+        <if test="type == 1">
+            WHERE b.garden_no IS NOT NULL
+        </if>
+    </select>
+    <resultMap id="RankResultMap" type="com.tomsung.agdc.vo.RankVo">
+        <result column="block_name" property="name"/>
+        <result column="output_sum" property="value"/>
+    </resultMap>
+    <select id="selectBlockAcreYield" resultMap="RankResultMap">
+        <![CDATA[
+        SELECT b.block_name, SUM(p.output) output_sum
+        FROM BLOCK b
+        LEFT JOIN PLANT_COMPACT pc ON pc.block_id = b.block_id
+        LEFT JOIN PLANT p ON p.compact_id = pc.id
+        WHERE pc.crop_id = #{cropId} AND p.output > 0
+        AND p.reap_time >= #{beginTime}
+        AND p.reap_time <= #{endTime}
+        GROUP BY b.block_name
+        ]]>
+    </select>
+    <resultMap id="CropResultMap" type="com.tomsung.agdc.domain.Crop">
+        <result column="crop_id" property="cropId"/>
+        <result column="crop_name" property="cropName"/>
+    </resultMap>
+    <select id="selectAllReapCropByTime" resultMap="CropResultMap">
+        <![CDATA[
+        SELECT pc.crop_name, pc.crop_id
+        FROM PLANT p
+        LEFT JOIN PLANT_COMPACT pc ON p.compact_id = pc.id
+        WHERE p.output > 0
+        AND p.reap_time >= #{beginTime}
+        AND p.reap_time <= #{endTime}
+        GROUP BY pc.crop_name
+        ]]>
+    </select>
+    <resultMap id="BlockIsAutoAreaMap" type="com.tomsung.agdc.vo.BlockIsAutoAreaVo">
+        <result column="not_auto_summ" jdbcType="DECIMAL" property="notAutoSumm"/>
+        <result column="auto_summ" jdbcType="DECIMAL" property="autoSumm"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <select id="selectBlocIsAutoArea" resultMap="BlockIsAutoAreaMap">
+        SELECT CONCAT(c.city_name, c.area_name) address, c.summ not_auto_summ, d.summ auto_summ
+        FROM (SELECT SUM(b.block_area) summ, c.name city_name, a.name area_name, b.area_code
+              FROM BLOCK b
+                       LEFT JOIN AREA a ON a.code = b.area_code
+                       LEFT JOIN CITY c ON c.code = a.city_code
+              WHERE b.garden_no IS NULL
+              GROUP BY b.area_code) c
+                 LEFT JOIN (SELECT SUM(b.block_area) summ, b.area_code
+                            FROM BLOCK b
+                            WHERE b.garden_no IS NOT NULL
+                            GROUP BY b.area_code) d ON c.area_code = d.area_code
+    </select>
+</mapper>

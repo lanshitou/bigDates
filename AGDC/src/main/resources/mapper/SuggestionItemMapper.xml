@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.SuggestionItemMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.SuggestionItem">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="suggestion_id" jdbcType="INTEGER" property="suggestionId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sort_order" jdbcType="TINYINT" property="sortOrder"/>
+        <result column="is_show" jdbcType="BIT" property="isShow"/>
+        <result column="product_id" jdbcType="INTEGER" property="productId"/>
+        <result column="shipping_time" jdbcType="DATE" property="shippingTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tomsung.agdc.domain.SuggestionItemWithBLOBs">
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+        <result column="sub_images" jdbcType="LONGVARCHAR" property="subImages"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, suggestion_id, name, sort_order, is_show, product_id, shipping_time, create_time, 
+    update_time
+  </sql>
+    <sql id="Blob_Column_List">
+    description, sub_images
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from SUGGESTION_ITEM
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SUGGESTION_ITEM
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.SuggestionItemWithBLOBs">
+    insert into SUGGESTION_ITEM (id, suggestion_id, name, 
+      sort_order, is_show, product_id, 
+      shipping_time, create_time, update_time, 
+      description, sub_images)
+    values (#{id,jdbcType=INTEGER}, #{suggestionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sortOrder,jdbcType=TINYINT}, #{isShow,jdbcType=BIT}, #{productId,jdbcType=INTEGER}, 
+      #{shippingTime,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=LONGVARCHAR}, #{subImages,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.SuggestionItemWithBLOBs">
+        insert into SUGGESTION_ITEM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="suggestionId != null">
+                suggestion_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="shippingTime != null">
+                shipping_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="subImages != null">
+                sub_images,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="suggestionId != null">
+                #{suggestionId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder,jdbcType=TINYINT},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=BIT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="shippingTime != null">
+                #{shippingTime,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="subImages != null">
+                #{subImages,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.SuggestionItemWithBLOBs">
+        update SUGGESTION_ITEM
+        <set>
+            <if test="suggestionId != null">
+                suggestion_id = #{suggestionId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder,jdbcType=TINYINT},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=BIT},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="shippingTime != null">
+                shipping_time = #{shippingTime,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="subImages != null">
+                sub_images = #{subImages,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tomsung.agdc.domain.SuggestionItemWithBLOBs">
+    update SUGGESTION_ITEM
+    set suggestion_id = #{suggestionId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=TINYINT},
+      is_show = #{isShow,jdbcType=BIT},
+      product_id = #{productId,jdbcType=INTEGER},
+      shipping_time = #{shippingTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=LONGVARCHAR},
+      sub_images = #{subImages,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.SuggestionItem">
+    update SUGGESTION_ITEM
+    set suggestion_id = #{suggestionId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=TINYINT},
+      is_show = #{isShow,jdbcType=BIT},
+      product_id = #{productId,jdbcType=INTEGER},
+      shipping_time = #{shippingTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

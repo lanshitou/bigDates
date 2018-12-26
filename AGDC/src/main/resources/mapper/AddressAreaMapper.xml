@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.AddressAreaMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.AddressArea">
+        <id column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="city_code" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="province_code" jdbcType="VARCHAR" property="provinceCode"/>
+    </resultMap>
+    <resultMap id="AddressResultMap" type="com.tomsung.agdc.vo.AddressVO">
+        <result column="province_code" property="provinceCode"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="district_code" property="districtCode"/>
+        <result column="district_name" property="districtName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    code, name, city_code, province_code
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from AREA
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="selectGrowersByCity" resultMap="BaseResultMap">
+        select a.code, a.name
+        from AREA a
+        left join USER u on u.AREA_CODE = a.code
+        where left(u.AREA_CODE,4) = #{cityCode}
+        group by a.code, a.name
+    </select>
+    <select id="selectAddressByCode" resultMap="AddressResultMap">
+        select p.code province_code , p.name province_name, a.city_code, c.name city_name, a.code district_code, a.name district_name
+        from AREA a
+        left join CITY c on a.city_code = c.code
+        left join PROVINCE p on a.province_code = p.code
+        where a.code = #{areaCode}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from AREA
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.AddressArea">
+    insert into AREA (code, name, city_code, 
+      province_code)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.AddressArea">
+        insert into AREA
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="provinceCode != null">
+                province_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                #{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.AddressArea">
+        update AREA
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                province_code = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where code = #{code,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.AddressArea">
+    update AREA
+    set name = #{name,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

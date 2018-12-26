@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.CropGrowMapper">
+  <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.CropGrow">
+    <id column="crop_id" jdbcType="INTEGER" property="cropId" />
+    <id column="sort" jdbcType="TINYINT" property="sort" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="stage_days" jdbcType="INTEGER" property="stageDays" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    crop_id, sort, name, image_url, stage_days, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.tomsung.agdc.domain.CropGrowKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CROP_GROW
+    where crop_id = #{cropId,jdbcType=INTEGER}
+      and sort = #{sort,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.tomsung.agdc.domain.CropGrowKey">
+    delete from CROP_GROW
+    where crop_id = #{cropId,jdbcType=INTEGER}
+      and sort = #{sort,jdbcType=TINYINT}
+  </delete>
+  <insert id="insert" parameterType="com.tomsung.agdc.domain.CropGrow">
+    insert into CROP_GROW (crop_id, sort, name, 
+      image_url, stage_days, create_time, 
+      update_time)
+    values (#{cropId,jdbcType=INTEGER}, #{sort,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{stageDays,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.CropGrow">
+    insert into CROP_GROW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cropId != null">
+        crop_id,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="stageDays != null">
+        stage_days,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cropId != null">
+        #{cropId,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="stageDays != null">
+        #{stageDays,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.CropGrow">
+    update CROP_GROW
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="stageDays != null">
+        stage_days = #{stageDays,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where crop_id = #{cropId,jdbcType=INTEGER}
+      and sort = #{sort,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.CropGrow">
+    update CROP_GROW
+    set name = #{name,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      stage_days = #{stageDays,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where crop_id = #{cropId,jdbcType=INTEGER}
+      and sort = #{sort,jdbcType=TINYINT}
+  </update>
+  <resultMap id="CropStageMap" type="com.tomsung.agdc.vo.CropStageInBlockVo">
+    <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+    <result column="block_id" jdbcType="INTEGER" property="blockId"/>
+    <result column="crop_name" jdbcType="VARCHAR" property="cropName"/>
+    <result column="batch" jdbcType="VARCHAR" property="batch"/>
+    <result column="sprout_time" jdbcType="TIMESTAMP" property="sproutTime"/>
+    <collection property="cropGrow" ofType="com.tomsung.agdc.domain.CropGrow">
+      <id column="crop_id" jdbcType="INTEGER" property="cropId"/>
+      <id column="sort" jdbcType="TINYINT" property="sort"/>
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+      <result column="stage_days" jdbcType="INTEGER" property="stageDays"/>
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </collection>
+  </resultMap>
+  <select id="selectCropStage" resultMap="CropStageMap" parameterType="java.lang.Integer">
+    SELECT
+           pc.crop_id,
+           pc.block_id,
+           pc.crop_name,
+           p.batch,
+           p.sprout_time,
+           cg.*
+    FROM
+         PLANT p
+           LEFT JOIN PLANT_COMPACT pc
+                 ON p.compact_id = pc.id
+           LEFT JOIN CROP_GROW cg
+                 ON cg.crop_id = pc.id
+    WHERE pc.block_id = #{blockId}
+  </select>
+
+  <resultMap id="CropCountVOResultMap" type="com.tomsung.agdc.vo.CropCountVO">
+    <result column="AREA" jdbcType="INTEGER" property="area"/>
+    <result column="NAME" jdbcType="VARCHAR" property="name"/>
+  </resultMap>
+  <select id="selectCropCountVO" resultMap="CropCountVOResultMap">
+    SELECT
+           SUM(PLANT_COMPACT.`crop_area`) AREA,
+           PLANT_COMPACT.`crop_name`      NAME
+    FROM
+         PLANT,
+         PLANT_COMPACT
+    WHERE PLANT.`compact_id` = PLANT_COMPACT.`id`
+    GROUP BY PLANT_COMPACT.`crop_id`
+    ORDER BY AREA DESC
+    LIMIT 5
+  </select>
+  <select id="selectCropGrowByCropId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select name, stage_days, sort, image_url
+    from CROP_GROW
+    where crop_id = #{cropId}
+    ORDER BY sort asc
+  </select>
+</mapper>

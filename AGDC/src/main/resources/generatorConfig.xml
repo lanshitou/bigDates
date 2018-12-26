@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 配置文件路径 -->
+    <properties resource="generatorConfig.properties"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="javaFileEncoding" value="UTF-8"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${model.package}" targetProject="${target.project}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="javaExampleTargetPackage" value="${model.package}"/>
+            <property name="javaExampleTargetProject" value="${target.project}"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="${xml.package}" targetProject="${xml.target.project}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 自动生成mapper接口, 可以是 ANNOTATEDMAPPER(注解), XMLMAPPER(xml), MIXEDMAPPER(不知道) -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${mapper.package}"
+                             targetProject="${target.project}">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!--         <table tableName="PRODUCT_COMPANY" domainObjectName="ProductCompany" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="AUTOPLAN_DETAIl" domainObjectName="AutoPlanDetail" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="BEAMSTRENGTH" domainObjectName="BeamStrength" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+        <!--         <table tableName="CO2" domainObjectName="Co2" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="CROP" domainObjectName="Crop" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+        <!--         <table tableName="CROPTYPE" domainObjectName="CropType" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table>  -->
+
+        <!--         <table tableName="CYCLEPLAN_DETAIL" domainObjectName="CyclePlanDetail" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table>  -->
+
+        <!--         <table tableName="DEVICE" domainObjectName="Device" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table>  -->
+        <!--         <table tableName="FARMLAND" domainObjectName="Farmland" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="FERTILIZATION_DETAIL" domainObjectName="FertilizationDetail" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="HUMIDITY" domainObjectName="Humidity" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="OPERATELOG" domainObjectName="OperateLog" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="OPERATE_DEV_LOG" domainObjectName="OperateDevLog" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="PLAN" domainObjectName="Plan" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="PRODUCT" domainObjectName="Product" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="PRODUCT_CATEGORY" domainObjectName="ProductCategory" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--<table tableName="PRODUCT_COMPANY" domainObjectName="ProductCompany" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--         <table tableName="QUESTION_REPLY_RECORD" domainObjectName="QuestionReplyRecord" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="SALE_DETAIL" domainObjectName="SaleDetail" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="TEMPERATURE" domainObjectName="Temperature" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+        <!---->
+        <!--<table tableName="EXPERT" domainObjectName="Expert" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--         <table tableName="PICKUP_POINT" domainObjectName="PickupPoint" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table> -->
+
+        <!--         <table tableName="PROFICIENT_CROP" domainObjectName="ProficientCrop" enableCountByExample="false" -->
+        <!--                enableUpdateByExample="false" -->
+        <!--                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"> -->
+        <!--         </table>  -->
+        <!--<table tableName="REPLY" domainObjectName="Reply" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="EXPERT_SCORE" domainObjectName="ExpertScore" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="PRODUCTION" domainObjectName="Production" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="SUGGESTION" domainObjectName="Suggestion" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="ORDER" domainObjectName="Order" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="QUESTION" domainObjectName="Question" enableCountByExample="false"
+        enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="SOIL_ITEM" domainObjectName="SoilItem" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="SOIL_STANDARD" domainObjectName="SoilStandard" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="SOIL_STANDARD_ITEM" domainObjectName="SoilStandardItem" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="BLOCK_SOIL" domainObjectName="BlockSoil" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="BLOCK_SOIL_ITEM" domainObjectName="BlockSoilItem" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="USER_MATTER" domainObjectName="UserMatter" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="CROP_GROW" domainObjectName="CropGrow" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="BLOCK_VIDEO" domainObjectName="BlockVideo" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="DEAL" domainObjectName="Deal" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="USER_EARN" domainObjectName="UserEarn" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="PLANT" domainObjectName="Plant" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="REAP_CROP" domainObjectName="ReapCrop" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="BLOCK_IMAGE" domainObjectName="BlockImage" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="BLOCK_IMPAIR" domainObjectName="BlockImpair" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="IMPAIR" domainObjectName="Impair" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table tableName="SUGGESTION_ITEM" domainObjectName="SuggestionItem" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="SUGGESTION_ITEM_PRODUCT" domainObjectName="SuggestionItemProduct" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="PROVINCE" domainObjectName="AddressProvince" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="CITY" domainObjectName="AddressCity" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="AREA" domainObjectName="AddressArea" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="PLANT_COMPACT" domainObjectName="PlantCompact" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="PLANT_LOG" domainObjectName="PlantLog" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="USER_GROWERS" domainObjectName="UserGrowers" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="AIR_HUMIDITY" domainObjectName="AirHumidity" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+        <!--<table tableName="USER" domainObjectName="User" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="BLOCK" domainObjectName="Block" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>-->
+    </context>
+</generatorConfiguration>
+
+

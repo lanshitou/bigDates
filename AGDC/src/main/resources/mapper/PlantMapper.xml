@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.PlantMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.Plant">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="compact_id" jdbcType="INTEGER" property="compactId"/>
+        <result column="annual" jdbcType="INTEGER" property="annual"/>
+        <result column="batch" jdbcType="VARCHAR" property="batch"/>
+        <result column="output" jdbcType="INTEGER" property="output"/>
+        <result column="sprout_time" jdbcType="TIMESTAMP" property="sproutTime"/>
+        <result column="reap_time" jdbcType="TIMESTAMP" property="reapTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="com.tomsung.agdc.domain.Plant" extends="BaseResultMap">
+        <result column="crop_id" property="cropId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, compact_id, annual, batch, output, sprout_time, reap_time, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PLANT
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCropIdAndBlockId" resultMap="BaseResultMap">
+        select p.id, p.batch
+        from PLANT p
+        left join PLANT_COMPACT pc on p.compact_id = pc.id
+        where pc.crop_id = #{cropId} and pc.block_id = #{blockId}
+    </select>
+    <select id="selectById" resultMap="DetailResultMap">
+        select p.sprout_time, pc.crop_id
+        from PLANT p
+        left join PLANT_COMPACT pc on pc.id = p.compact_id
+        where p.id = #{id}
+    </select>
+    <select id="selectByCropAndUser" resultMap="BaseResultMap">
+        select p.id, p.batch
+        from PLANT p
+        left join PLANT_COMPACT pc on pc.id = p.compact_id
+        where pc.user_id = #{userId} and pc.crop_id = #{cropId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PLANT
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.Plant">
+    insert into PLANT (id, compact_id, annual,
+      batch, output, sprout_time,
+      reap_time, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{compactId,jdbcType=INTEGER}, #{annual,jdbcType=INTEGER},
+      #{batch,jdbcType=VARCHAR}, #{output,jdbcType=INTEGER}, #{sproutTime,jdbcType=TIMESTAMP},
+      #{reapTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.Plant">
+        insert into PLANT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="compactId != null">
+                compact_id,
+            </if>
+            <if test="annual != null">
+                annual,
+            </if>
+            <if test="batch != null">
+                batch,
+            </if>
+            <if test="output != null">
+                output,
+            </if>
+            <if test="sproutTime != null">
+                sprout_time,
+            </if>
+            <if test="reapTime != null">
+                reap_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="compactId != null">
+                #{compactId,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="batch != null">
+                #{batch,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                #{output,jdbcType=INTEGER},
+            </if>
+            <if test="sproutTime != null">
+                #{sproutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reapTime != null">
+                #{reapTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.Plant">
+        update PLANT
+        <set>
+            <if test="compactId != null">
+                compact_id = #{compactId,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                annual = #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="batch != null">
+                batch = #{batch,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                output = #{output,jdbcType=INTEGER},
+            </if>
+            <if test="sproutTime != null">
+                sprout_time = #{sproutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reapTime != null">
+                reap_time = #{reapTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.Plant">
+    update PLANT
+    set compact_id = #{compactId,jdbcType=INTEGER},
+      annual = #{annual,jdbcType=INTEGER},
+      batch = #{batch,jdbcType=VARCHAR},
+      output = #{output,jdbcType=INTEGER},
+      sprout_time = #{sproutTime,jdbcType=TIMESTAMP},
+      reap_time = #{reapTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectOutputSum" resultType="java.lang.Integer">
+        SELECT SUM(p.output) FROM PLANT p
+        <if test="date != null">
+            WHERE p.create_time > #{date}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.BlockImageMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.BlockImage">
+        <id column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <id column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        block_id, image_url, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockImageKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BLOCK_IMAGE
+        where block_id = #{blockId,jdbcType=INTEGER}
+        and image_url = #{imageUrl,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockImageKey">
+        delete
+        from BLOCK_IMAGE
+        where block_id = #{blockId,jdbcType=INTEGER}
+          and image_url = #{imageUrl,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.BlockImage">
+        insert into BLOCK_IMAGE (block_id, image_url, create_time)
+        values (#{blockId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.BlockImage">
+        insert into BLOCK_IMAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blockId != null">
+                block_id,
+            </if>
+            <if test="imageUrl != null">
+                image_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blockId != null">
+                #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.BlockImage">
+        update BLOCK_IMAGE
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where block_id = #{blockId,jdbcType=INTEGER}
+        and image_url = #{imageUrl,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockImage">
+        update BLOCK_IMAGE
+        set create_time = #{createTime,jdbcType=TIMESTAMP}
+        where block_id = #{blockId,jdbcType=INTEGER}
+          and image_url = #{imageUrl,jdbcType=VARCHAR}
+    </update>
+    <resultMap id="BlockImageMap" type="com.tomsung.agdc.vo.BlockImageVo">
+        <result column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+    </resultMap>
+    <select id="selectBlockImage" resultMap="BlockImageMap">
+        SELECT bi.image_url
+        FROM BLOCK_IMAGE bi
+        WHERE bi.block_id = #{blockId}
+    </select>
+</mapper>

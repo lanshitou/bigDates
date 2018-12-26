@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.CropGrowthStageMapper">
+    <resultMap id="cropGrowthStageMap" type="com.tomsung.agdc.vo.CropGrowthStageVo">
+        <result column="crop_Name" jdbcType="VARCHAR" property="cropName"/>
+        <result column="batch" jdbcType="VARCHAR" property="batch"/>
+        <result column="grow_time" jdbcType="DATE" property="growTime"/>
+        <collection property="cropGrowthStageStandardVo" ofType="com.tomsung.agdc.vo.CropGrowthStageStandardVo">
+            <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+            <result column="sort" jdbcType="INTEGER" property="sort"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+            <result column="stage_days" jdbcType="INTEGER" property="stageDays"/>
+        </collection>
+    </resultMap>
+    <select id="selectCropGrowthStage" resultMap="cropGrowthStageMap" parameterType="java.lang.Integer">
+        SELECT
+               pc.crop_id,
+               pc.block_id,
+               pc.crop_name,
+               p.batch,
+               p.sprout_time,
+               cg.*
+        FROM
+             PLANT p
+                 LEFT JOIN PLANT_COMPACT pc
+                     ON p.compact_id = pc.id
+                 LEFT JOIN CROP_GROW cg
+                     ON cg.crop_id = pc.id
+        WHERE pc.block_id = #{blockId,jdbcType=INTEGER}
+    </select>
+</mapper>

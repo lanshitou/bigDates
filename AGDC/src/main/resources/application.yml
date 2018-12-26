@@ -1,0 +1,40 @@
+#Server
+server:
+  port: 9080
+
+#jackson
+spring:
+  jackson:
+    date-format: yyyy-MM-dd
+    timeZone: GMT+08:00
+
+#MySQL
+  datasource:
+    url: jdbc:mysql://121.40.214.181:3306/big_data?useUnicode=true&characterEncoding=utf-8&useSSL=false
+#    url: jdbc:mysql://121.40.214.181:3306/agridatacenter?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root@tomsung
+    driver-class-name: com.mysql.jdbc.Driver
+
+    druid:
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+
+  #thymeleaf
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    mode: LEGACYHTML5
+
+#Mybatis日志
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+#  typeAliasesPackage: cn.tomsung.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true

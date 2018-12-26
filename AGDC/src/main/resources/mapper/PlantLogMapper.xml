@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.PlantLogMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.PlantLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="plant_id" jdbcType="INTEGER" property="plantId"/>
+        <result column="plant_type" jdbcType="VARCHAR" property="plantType"/>
+        <result column="plant_detail" jdbcType="VARCHAR" property="plantDetail"/>
+        <result column="plant_time" jdbcType="INTEGER" property="plantTime"/>
+        <result column="result" jdbcType="BIT" property="result"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tomsung.agdc.domain.PlantLog">
+        <result column="plant_images" jdbcType="LONGVARCHAR" property="plantImages"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, user_name, plant_id, plant_type, plant_detail, plant_time, result, create_time, 
+    update_time
+  </sql>
+    <sql id="Blob_Column_List">
+    plant_images
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from PLANT_LOG
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPlantId" resultMap="ResultMapWithBLOBs">
+        select<include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from PLANT_LOG
+        where plant_id = #{plantId}
+    </select>
+    <select id="selectByUserId" resultMap="ResultMapWithBLOBs">
+        select id,user_name, plant_type, plant_time
+        from PLANT_LOG
+        where user_id = #{userId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PLANT_LOG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.PlantLog">
+    insert into PLANT_LOG (id, user_id, user_name, 
+      plant_id, plant_type, plant_detail, 
+      plant_time, result, create_time, 
+      update_time, plant_images)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{plantId,jdbcType=INTEGER}, #{plantType,jdbcType=VARCHAR}, #{plantDetail,jdbcType=VARCHAR}, 
+      #{plantTime,jdbcType=INTEGER}, #{result,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{plantImages,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.PlantLog">
+        insert into PLANT_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="plantId != null">
+                plant_id,
+            </if>
+            <if test="plantType != null">
+                plant_type,
+            </if>
+            <if test="plantDetail != null">
+                plant_detail,
+            </if>
+            <if test="plantTime != null">
+                plant_time,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="plantImages != null">
+                plant_images,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="plantId != null">
+                #{plantId,jdbcType=INTEGER},
+            </if>
+            <if test="plantType != null">
+                #{plantType,jdbcType=VARCHAR},
+            </if>
+            <if test="plantDetail != null">
+                #{plantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="plantTime != null">
+                #{plantTime,jdbcType=INTEGER},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="plantImages != null">
+                #{plantImages,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.PlantLog">
+        update PLANT_LOG
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="plantId != null">
+                plant_id = #{plantId,jdbcType=INTEGER},
+            </if>
+            <if test="plantType != null">
+                plant_type = #{plantType,jdbcType=VARCHAR},
+            </if>
+            <if test="plantDetail != null">
+                plant_detail = #{plantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="plantTime != null">
+                plant_time = #{plantTime,jdbcType=INTEGER},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="plantImages != null">
+                plant_images = #{plantImages,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tomsung.agdc.domain.PlantLog">
+    update PLANT_LOG
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      plant_id = #{plantId,jdbcType=INTEGER},
+      plant_type = #{plantType,jdbcType=VARCHAR},
+      plant_detail = #{plantDetail,jdbcType=VARCHAR},
+      plant_time = #{plantTime,jdbcType=INTEGER},
+      result = #{result,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      plant_images = #{plantImages,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.PlantLog">
+    update PLANT_LOG
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      plant_id = #{plantId,jdbcType=INTEGER},
+      plant_type = #{plantType,jdbcType=VARCHAR},
+      plant_detail = #{plantDetail,jdbcType=VARCHAR},
+      plant_time = #{plantTime,jdbcType=INTEGER},
+      result = #{result,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT user_id, plant_id
+        FROM PLANT_LOG
+        GROUP BY  user_id, plant_id
+    </select>
+</mapper>

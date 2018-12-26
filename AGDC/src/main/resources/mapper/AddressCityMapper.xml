@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.AddressCityMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.AddressCity">
+        <id column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="province_code" jdbcType="VARCHAR" property="provinceCode"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    code, name, province_code
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from CITY
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="selectGrowersByProvince" resultMap="BaseResultMap">
+        select c.code, c.name
+        from CITY c
+        left join USER u on left(u.AREA_CODE,4) = c.code
+        where left(u.AREA_CODE,2) = #{provinceCode}
+        group by c.code, c.name
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CITY
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.AddressCity">
+    insert into CITY (code, name, province_code
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.AddressCity">
+        insert into CITY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="provinceCode != null">
+                province_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                #{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.AddressCity">
+        update CITY
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                province_code = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where code = #{code,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.AddressCity">
+    update CITY
+    set name = #{name,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.BlockImpairMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.BlockImpair">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="block_id" jdbcType="INTEGER" property="blockId"/>
+        <result column="annual" jdbcType="INTEGER" property="annual"/>
+        <result column="impair_id" jdbcType="INTEGER" property="impairId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, block_id, annual, impair_id, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BLOCK_IMPAIR
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from BLOCK_IMPAIR
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.BlockImpair">
+        insert into BLOCK_IMPAIR (id, block_id, annual, impair_id, create_time, update_time)
+        values (#{id,jdbcType=INTEGER},
+                #{blockId,jdbcType=INTEGER},
+                #{annual,jdbcType=INTEGER},
+                #{impairId,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.BlockImpair">
+        insert into BLOCK_IMPAIR
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="blockId != null">
+                block_id,
+            </if>
+            <if test="annual != null">
+                annual,
+            </if>
+            <if test="impairId != null">
+                impair_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="blockId != null">
+                #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="impairId != null">
+                #{impairId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.BlockImpair">
+        update BLOCK_IMPAIR
+        <set>
+            <if test="blockId != null">
+                block_id = #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="annual != null">
+                annual = #{annual,jdbcType=INTEGER},
+            </if>
+            <if test="impairId != null">
+                impair_id = #{impairId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockImpair">
+        update BLOCK_IMPAIR
+        set block_id    = #{blockId,jdbcType=INTEGER},
+            annual      = #{annual,jdbcType=INTEGER},
+            impair_id   = #{impairId,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <resultMap id="ImpairAnnualMap" type="com.tomsung.agdc.vo.ImpairAnnualVo">
+        <result column="years" jdbcType="INTEGER" property="annual"/>
+    </resultMap>
+    <select id="selectImpairAnnual" resultMap="ImpairAnnualMap">
+        SELECT *
+        FROM (SELECT DATE_FORMAT(bi.annual, '%Y') years FROM BLOCK_IMPAIR bi WHERE bi.block_id = #{blockId} GROUP BY annual) a
+        GROUP BY a.years
+    </select>
+    <resultMap id="ImpairMap" type="com.tomsung.agdc.vo.ImpairVo">
+        <result column="impair_id" jdbcType="INTEGER" property="id"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <select id="selectImpair" resultMap="ImpairMap">
+        SELECT COUNT(*) COUNT, i.name, bi.impair_id
+        FROM BLOCK_IMPAIR bi
+                 LEFT JOIN IMPAIR i ON bi.impair_id = i.id
+        WHERE bi.block_id = #{blockId}
+          AND bi.annual LIKE concat(#{annual}, '%')
+        GROUP BY i.name
+
+    </select>
+    <select id="getmonth" resultType="com.tomsung.agdc.vo.MonthVo">
+        SELECT DATE_FORMAT(bi.annual, '%m') MONTH
+        FROM BLOCK_IMPAIR bi
+        WHERE bi.block_id = #{blockId}
+          AND bi.annual LIKE CONCAT(#{annual}, '%')
+          AND bi.impair_id = #{impairId}
+    </select>
+</mapper>

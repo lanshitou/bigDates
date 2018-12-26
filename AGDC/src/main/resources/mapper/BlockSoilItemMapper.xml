@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomsung.agdc.mapper.BlockSoilItemMapper">
+    <resultMap id="BaseResultMap" type="com.tomsung.agdc.domain.BlockSoilItem">
+        <id column="BLOCK_SOIL_ID" jdbcType="INTEGER" property="blockSoilId"/>
+        <id column="ITEM_ID" jdbcType="INTEGER" property="itemId"/>
+        <result column="VALUE" jdbcType="DECIMAL" property="value"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="ListResultMap" type="com.tomsung.agdc.domain.BlockSoilItem" extends="BaseResultMap">
+        <result column="item_name" property="itemName"/>
+        <result column="item_unit" property="itemUnit"/>
+        <result column="ABBREVIATION" property="abbreviation"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    BLOCK_SOIL_ID, ITEM_ID, VALUE, CREATE_TIME, UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockSoilItemKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BLOCK_SOIL_ITEM
+        where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBlockSoilId" resultMap="ListResultMap">
+        select bsi.BLOCK_SOIL_ID, bsi.ITEM_ID, bsi.VALUE, si.NAME item_name, si.UNIT item_unit, si.ABBREVIATION
+        from BLOCK_SOIL_ITEM bsi
+        left join SOIL_ITEM si on bsi.ITEM_ID = si.ID
+        where bsi.BLOCK_SOIL_ID = #{blockSoilId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockSoilItemKey">
+    delete from BLOCK_SOIL_ITEM
+    where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.tomsung.agdc.domain.BlockSoilItem">
+    insert into BLOCK_SOIL_ITEM (BLOCK_SOIL_ID, ITEM_ID, VALUE,
+      CREATE_TIME, UPDATE_TIME)
+    values (#{blockSoilId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{value,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tomsung.agdc.domain.BlockSoilItem">
+        insert into BLOCK_SOIL_ITEM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blockSoilId != null">
+                BLOCK_SOIL_ID,
+            </if>
+            <if test="itemId != null">
+                ITEM_ID,
+            </if>
+            <if test="value != null">
+                VALUE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blockSoilId != null">
+                #{blockSoilId,jdbcType=INTEGER},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tomsung.agdc.domain.BlockSoilItem">
+        update BLOCK_SOIL_ITEM
+        <set>
+            <if test="value != null">
+                VALUE = #{value,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+        and ITEM_ID = #{itemId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tomsung.agdc.domain.BlockSoilItem">
+    update BLOCK_SOIL_ITEM
+    set VALUE = #{value,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where BLOCK_SOIL_ID = #{blockSoilId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="SoilItemMap" type="com.tomsung.agdc.vo.SoilItemContentVo">
+      <result column="BLOCK_ID" javaType="INTEGER" property="blockId"/>
+      <result column="crop_id" jdbcType="INTEGER" property="cropId"/>
+      <result column="block_name" jdbcType="VARCHAR" property="blockName"/>
+      <collection property="itemVos" ofType="com.tomsung.agdc.vo.ItemVo" javaType="java.util.ArrayList" >
+          <result column="ID" jdbcType="INTEGER" property="id"/>
+          <result column="NAME" jdbcType="VARCHAR" property="name"/>
+          <result column="VALUE" jdbcType="DECIMAL" property="value"/>
+          <result column="UNIT" jdbcType="INTEGER" property="unit"/>
+          <result column="ABBREVIATION" jdbcType="VARCHAR" property="abbreviation"/>
+      </collection>
+  </resultMap>
+  <select id="selectSurveyContent" resultMap="SoilItemMap" parameterType="java.lang.Integer">
+      SELECT ID.BLOCK_ID,ID.CROP_ID,bsi.VALUE,si.NAME,si.ID,si.UNIT,block_name,si.ABBREVIATION FROM  (SELECT  MAX(bs.ID) ID,bs.BLOCK_ID,pc.crop_id CROP_ID,block_name
+      FROM  BLOCK_SOIL bs
+      INNER JOIN PLANT_COMPACT pc
+      ON bs.BLOCK_ID = pc.block_id
+      LEFT JOIN BLOCK b
+      ON bs.BLOCK_ID = b.block_id
+      WHERE pc.user_id = #{userId}
+      GROUP BY bs.BLOCK_ID) ID
+      LEFT JOIN BLOCK_SOIL_ITEM bsi
+      ON bsi.BLOCK_SOIL_ID = ID
+      LEFT JOIN SOIL_ITEM si
+      ON si.ID = bsi.ITEM_ID
+      WHERE si.UNIT = 1
+  </select>
+    <resultMap id="itemMap" type="com.tomsung.agdc.vo.ItemVo">
+        <result column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="VALUE" jdbcType="DECIMAL" property="value"/>
+    </resultMap>
+  <select id="selectStandardContent" resultMap="itemMap">
+      SELECT ssi.VALUE, si.ID
+      FROM SOIL_ITEM si
+               LEFT JOIN SOIL_STANDARD_ITEM ssi ON ssi.ITEM_ID = si.ID
+               LEFT JOIN SOIL_STANDARD ss ON ss.ID = ssi.SOIL_STANDARD_ID
+      WHERE ss.CROP_ID = #{cropId}
+  </select>
+</mapper>
